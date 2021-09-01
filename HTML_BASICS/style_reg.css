@@ -1,0 +1,80 @@
+.form_block {
+    background-color: #24323d;
+    box-sizing: border-box;
+    margin: auto;
+    padding-top: 30px;
+}
+
+.SignUp_bttn, .LogIn_bttn {
+    color: white;
+}
+
+h2 {
+    color: white;
+    font-family: Arial;
+    text-align: center;
+}
+.SignUp_LogIn_block {
+   height: 40px;
+   width: 400px;
+   background-color: darkgrey; 
+   
+   box-sizing: border-box;
+   margin: auto;
+   display: flex;
+   justify-content: space-between;
+}
+.SignUp_block{
+    height: 30px;
+    width: 200px;
+    background-color: #21b086;
+    text-align: center;
+    padding-top: 10px;
+}
+.LogIn_block{
+    height: 30px;
+    width: 200px;
+    background-color: #43515b;
+    text-align: center;
+    padding-top: 10px;
+}
+
+a {
+  text-decoration: none;
+  font-family: Arial;
+  color: white;
+}
+
+.fields_block{
+    height: 400px;
+    width: 400px;
+    box-sizing: border-box;
+    margin: auto; 
+}
+
+#fname, #lname {
+    height: 30px;
+    width: 190px; 
+}
+
+#email, #password {
+    height: 30px;
+    width: 392px;
+}
+#birthday{
+    height: 30px;
+    width: 392px;
+}
+#birthday_label, #categories_label, #confirm_check_label{
+    color: white;
+    font-size: 20px;
+    font-family: Arial;
+}
+#button_GET_STARTED{
+    background-color: #21b086;
+    height: 50px;
+    width: 400px;
+    font-family: Arial;
+    color: white;
+    font-size: 30px;
+}
