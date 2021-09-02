@@ -24,14 +24,14 @@ h2 {
    display: flex;
    justify-content: space-between;
 }
-.SignUp_block{
+.active_block{
     height: 30px;
     width: 200px;
     background-color: #21b086;
     text-align: center;
     padding-top: 10px;
 }
-.LogIn_block{
+.passive_block{
     height: 30px;
     width: 200px;
     background-color: #43515b;
