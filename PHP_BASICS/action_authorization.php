@@ -1,13 +1,11 @@
 <?php
 
-function giveEmail ():string {
-  return htmlspecialchars($_POST['email']);
+function get_POST_email ():string {
+  return htmlentities($_POST['email'], ENT_QUOTES);
 }
 //ToDo: Password Hashing
-function givePassword ():string {
-  return htmlspecialchars($_POST['password']);
+function get_POST_password ():string {
+  return password_hash($_POST['password'], PASSWORD_DEFAULT);
 }
-
-echo "User Email: " . giveEmail();
-echo "<br>";
-echo "User password: " . givePassword();
+//
+echo "User Email: " . get_POST_email() . "<br>" . "User password(HASH): " . get_POST_password() . "<br>";
