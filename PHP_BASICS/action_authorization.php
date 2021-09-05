@@ -3,7 +3,7 @@ class post_class {
   public $flag = TRUE;
   function getEmail(): string {
     $return_var = htmlentities($_POST['email'], ENT_QUOTES);
-    $len=str_len($return_var);
+    $len=strlen($return_var);
    if ($len < 5 || $len > 255){
       $this->flag=FALSE;
     }
@@ -11,7 +11,7 @@ class post_class {
   }
   function getPassword(): string {
     $return_var = htmlentities($_POST['password'], ENT_QUOTES);
-    $len=str_len($return_var);
+    $len=strlen($return_var);
     if ($len < 8 || $len > 32){
       $this->flag=FALSE;
     }
@@ -22,7 +22,7 @@ class post_class {
   }
   function getFname(): string {
     $return_var = htmlentities($_POST['fname'], ENT_QUOTES);
-    $len=str_len($return_var);
+    $len=strlen($return_var);
     if ($len < 3 || $len > 255){
       $this->flag=FALSE;
     }
@@ -30,7 +30,7 @@ class post_class {
   }
   function getLname(): string {
     $return_var = htmlentities($_POST['lname'], ENT_QUOTES);
-    $len=str_len($return_var);
+    $len=strlen($return_var);
     if ($len < 3 || $len > 255){
       $this->flag=FALSE;
     }
@@ -38,7 +38,7 @@ class post_class {
   }
   function getBirthday(): string {
     $return_var = htmlentities($_POST['birthday'], ENT_QUOTES);
-    $len=str_len($return_var);
+    $len=strlen($return_var);
     if ($len < 8 || $len > 10){
       $this->flag=FALSE;
     }
