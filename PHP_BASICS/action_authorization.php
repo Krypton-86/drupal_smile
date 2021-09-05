@@ -1,11 +1,13 @@
 <?php
 class post_class {
-  public $flag = TRUE;
+  private $isValid = TRUE;
+  private $errors = [];
   function getEmail(): string {
     $return_var = htmlentities($_POST['email'], ENT_QUOTES);
     $len=strlen($return_var);
-   if ($len < 5 || $len > 255){
-      $this->flag=FALSE;
+   if ($len < 5 || $len > 255 || !filter_var($return_var, FILTER_VALIDATE_EMAIL)){
+      $this->isValid = FALSE;
+     array_push($this->errors, "Email: Enter a valid email.");
     }
       return $return_var;
   }
@@ -13,7 +15,8 @@ class post_class {
     $return_var = htmlentities($_POST['password'], ENT_QUOTES);
     $len=strlen($return_var);
     if ($len < 8 || $len > 32){
-      $this->flag=FALSE;
+      $this->isValid=FALSE;
+      array_push($this->errors, "Password: Use passphrase from 8 to 32 symbols.");
     }
     return $return_var;
   }
@@ -21,26 +24,29 @@ class post_class {
     return password_hash($this->getPassword(), PASSWORD_DEFAULT);
   }
   function getFname(): string {
-    $return_var = htmlentities($_POST['fname'], ENT_QUOTES);
+    $return_var = $_POST['fname'];
     $len=strlen($return_var);
-    if ($len < 3 || $len > 255){
-      $this->flag=FALSE;
+    if ($len < 2 || $len > 255 || !preg_match("/^[a-zA-Z-' ]*$/",$return_var)){
+      $this->isValid=FALSE;
+      array_push($this->errors, "First name: Only letters and white space allowed, must be longer than one symbol.");
     }
-    return $return_var;
+    return htmlentities($return_var, ENT_QUOTES);
   }
   function getLname(): string {
-    $return_var = htmlentities($_POST['lname'], ENT_QUOTES);
+    $return_var = $_POST['lname'];
     $len=strlen($return_var);
-    if ($len < 3 || $len > 255){
-      $this->flag=FALSE;
+    if ($len < 2 || $len > 255 || !preg_match("/^[a-zA-Z-' ]*$/",$return_var)){
+      $this->isValid=FALSE;
+      array_push($this->errors, "Last name: Only letters and white space allowed, must be longer than one symbol.");
     }
-    return $return_var;
+    return htmlentities($return_var, ENT_QUOTES);
   }
   function getBirthday(): string {
     $return_var = htmlentities($_POST['birthday'], ENT_QUOTES);
     $len=strlen($return_var);
-    if ($len < 8 || $len > 10){
-      $this->flag=FALSE;
+    if ($len < 8 || $len > 10 || !preg_match("/^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$/",$return_var)){
+      $this->isValid = FALSE;
+      array_push($this->errors, "Birthdate: Check date.");
     }
     return $return_var;
   }
@@ -58,12 +64,19 @@ class post_class {
     if(htmlentities($_POST['confirm_reg_check'], ENT_QUOTES)=="CHECKED"){
       return TRUE;
     } else {
-      $this->flag = FALSE;
+      $this->isValid = FALSE;
+      array_push($this->errors, "Confirm registration: User not confirmed registration!");
       return FALSE;
     }
   }
   function getRememberCheck(): bool {
-    return htmlentities($_POST['remember_check'], ENT_QUOTES) == "REMEMBER" ? TRUE : FALSE;
+    return htmlentities($_POST['remember_check'], ENT_QUOTES) == "REMEMBER";
+  }
+  function getValidStatus(): bool{
+    return $this->isValid;
+  }
+  function getErrors(): array{
+    return $this->errors;
   }
 }
 //
@@ -74,4 +87,12 @@ $hash2=password_hash($_post->getPassword(), PASSWORD_DEFAULT);
 echo $hash . "<br>" . $is_correct = password_verify($_post->getPassword(), $hash)? "password is correct<br>":"password failed<br>";
 echo $hash2 . "<br>" . $is_correct = password_verify($_post->getPassword(), $hash2)? "password is correct<br>":"password failed<br>";
 $cat = $_post->getCategories();
+$confirmReg = $_post->getConfirmRegCheck();
+$remember = $_post->getRememberCheck();
+$date = $_post->getBirthday();
+$lname = $_post->getLname();
+$fname = $_post->getFname();
+$valid = $_post->getValidStatus();
+$err = $_post->getErrors();
+
 echo $cat;
