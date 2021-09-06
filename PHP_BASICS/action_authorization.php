@@ -11,7 +11,12 @@ if ($_post_auth->getValidStatus()) {
   if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
     if (password_verify($_post_auth->getPassword(), $row['Password'])) {
-      echo '<br>ok!<br>';
+      echo '<br>Password is ok!<br>';
+      header( "refresh:1;url=mypage.php" );
+    }
+    else {
+      echo "<style> h1{text-align: center; color: firebrick}</style> <br><br><br><h1>Wrong password!</h1><br><br><br>";
+      header( "refresh:3;url=authorization.html" );
     }
   }
   else {
