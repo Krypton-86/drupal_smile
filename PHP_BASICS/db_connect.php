@@ -8,8 +8,8 @@ $servername = "localhost";
 $db_conn = mysqli_connect($servername, $username, $password);
 // Check connection
 if (!$db_conn) {
-  die("Connection failed: " . mysqli_connect_error());
+  die("<style> h6{text-align: left; color: firebrick}</style><h6>Connection failed: </h6>>" . mysqli_connect_error());
 }
 else {
-  echo "Connected successfully<br>";
+  echo "<style> h6{text-align: left;}</style><h6>Connected successfully</h6><br>";
 }
