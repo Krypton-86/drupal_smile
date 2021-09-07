@@ -4,18 +4,15 @@ require 'db_connect.php';
 
 // Prepare query, check validity
 $_post_reg = new post_class();
-$categories = ucwords(implode(", ", $_post_reg->getCategories()));
-$categories = $categories == "" ? "" : ", " . $categories;
-$categories_to_true = $categories == "" ? "" : rtrim(str_repeat("'True', ", count($_post_reg->getCategories())), ", ");
 if ($_post_reg->getValidStatus() && $_post_reg->getConfirmRegCheck()) {
-  $db_query = "INSERT INTO smile.users (First_name, Last_name, Email, Birthday, Password" . $categories . ")
+  $db_query = "INSERT INTO smile.users (First_name, Last_name, Email, Birthday, Password" . $_post_reg->getCategoriesString() . ")
   VALUES ('" . $_post_reg->getFname()
     . "', '" . $_post_reg->getLname()
     . "', '" . $_post_reg->getEmail()
     . "', '" . $_post_reg->getBirthday()
     . "', '" . $_post_reg->getPasswordHash()
-    . "', '" . implode("', '", $_post_reg->getCategories())
-    . "');";
+    . "'" . $_post_reg->getCategoriesTruesMap()
+    . ");";
   // Run query for writing user info
   if (mysqli_query($db_conn, $db_query)) {
     echo "New user info record created successfully<br>";
