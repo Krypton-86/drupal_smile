@@ -1,23 +1,30 @@
 <?php
+session_start();
+session_cache_limiter('private_no_expire');
 require 'post_class.php';
 require 'db_connect.php';
 
-// Prepare query, check validity
 $_post_auth = new post_class();
 if ($_post_auth->getValidStatus()) {
-  $db_query = "SELECT Password FROM smile.users WHERE Email='" . $_post_auth->getEmail() . "';";
+  $db_query = "SELECT user_id, Password FROM smile.users WHERE Email='" . $_post_auth->getEmail() . "';";
   $result = mysqli_query($db_conn, $db_query);
   // Run query for writing user info
   if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
     if (password_verify($_post_auth->getPassword(), $row['Password'])) {
+      if ($_post_auth->getRememberCheck()) {
+        //set cookies
+        setcookie("remember", "yes", time() + (86400 * 30), "/"); // 86400 = 1 day
+      } else {
+        setcookie("remember", "no", time() + (86400 * 30), "/"); // 86400 = 1 day
+      }
+      setcookie("user_id", $row['user_id'], time() + (86400 * 30), "/"); // 86400 = 1 day
       echo '<style> h1{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>Everything will be OK!<h1><br><br><br>';
-      //set cookies and sessions
       header( "refresh:1;url=mypage.php" );
     }
     else {
-      echo "<style> h1{text-align: center; color: firebrick}</style> <br><br><br><h1>Wrong password!</h1><br><br><br>";
-      header( "refresh:3;url=authorization.html" );
+      setcookie("remember", "wrong password", time() + (30), "/"); // 86400 = 1 day
+      header( "refresh:0;url=logout.php" );
     }
   }
   else {
