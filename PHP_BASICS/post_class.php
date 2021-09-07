@@ -69,6 +69,13 @@ class post_class {
     }
     return $categories;
   }
+  function getCategoriesString(): string {
+    $categories = ucwords(implode(", ", $this->getCategories()));
+    return $categories == "" ? "" : ", " . $categories;
+  }
+  function getCategoriesTruesMap() : string {
+    return $this->getCategoriesString() == "" ? "" : str_repeat(", true", count($this->getCategories()));
+  }
 
   function getConfirmRegCheck(): bool {
     if (htmlentities($_POST['confirm_reg_check'], ENT_QUOTES) == "CHECKED") {
