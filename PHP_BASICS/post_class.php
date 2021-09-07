@@ -60,16 +60,12 @@ class post_class {
     return $return_var;
   }
 
-  //Todo:Change output to array
-  function getCategories(): string {
-    $categories = NULL;
+  function getCategories(): array {
+    $i = 0;
+    $categories = [];
     foreach ($_POST['categories'] as $category) {
-      if ($categories === NULL) {
-        $categories = $category;
-      }
-      else {
-        $categories = $categories . ", " . htmlentities($category, ENT_QUOTES);
-      }
+        $categories[$i] = htmlentities($category, ENT_QUOTES);
+        $i++;
     }
     return $categories;
   }
