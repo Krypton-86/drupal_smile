@@ -4,20 +4,23 @@ require 'db_connect.php';
 
 // Prepare query, check validity
 $_post_reg = new post_class();
+$categories = ucwords(implode(", ", $_post_reg->getCategories()));
+$categories = $categories == "" ? "" : ", " . $categories;
+$categories_to_true = $categories == "" ? "" : rtrim(str_repeat("'True', ", count($_post_reg->getCategories())), ", ");
 if ($_post_reg->getValidStatus() && $_post_reg->getConfirmRegCheck()) {
-  $db_query = "INSERT INTO smile.users (First_name, Last_name, Email, Birthday, Passwords)
+  $db_query = "INSERT INTO smile.users (First_name, Last_name, Email, Birthday, Password" . $categories . ")
   VALUES ('" . $_post_reg->getFname()
     . "', '" . $_post_reg->getLname()
     . "', '" . $_post_reg->getEmail()
     . "', '" . $_post_reg->getBirthday()
     . "', '" . $_post_reg->getPasswordHash()
+    . "', '" . implode("', '", $_post_reg->getCategories())
     . "');";
   // Run query for writing user info
   if (mysqli_query($db_conn, $db_query)) {
     echo "New user info record created successfully<br>";
     echo "____________________________________<br><br>";
     echo "Dear " . $_post_reg->getFname() . ", <br>You can authorize with your email in this page: <br><a href='/authorization.html'>Log In</a>";
-
   }
   else {
     echo "Error writing user info: " . $db_query . "<br>" . mysqli_error($db_conn);
@@ -25,7 +28,7 @@ if ($_post_reg->getValidStatus() && $_post_reg->getConfirmRegCheck()) {
 }
 else {
   //Write validity errors
-  echo "<br>$_post_reg->getErrors()<br>";
+  echo implode("<br>", $_post_reg->getErrors());
 }
 mysqli_close($db_conn);
 
