@@ -2,7 +2,7 @@
     background-color: #24323d;
     box-sizing: border-box;
     margin: auto;
-    padding-top: 30px;
+    padding-top: 10px;
 }
 
 .SignUp_bttn, .LogIn_bttn {
@@ -23,6 +23,27 @@ h2 {
    margin: auto;
    display: flex;
    justify-content: space-between;
+}
+#edit_LogOut {
+    height: 25px;
+    box-sizing: border-box;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.logout_block{
+    height: 30px;
+    width: 100px;
+    background-color: #43515b;
+    text-align: center;
+    padding-top: 10px;
+}
+.edit_block{
+    height: 30px;
+    width: 100px;
+    background-color: #21b086;
+    text-align: center;
+    padding-top: 10px;
 }
 .active_block{
     height: 30px;
@@ -61,11 +82,15 @@ a {
     height: 30px;
     width: 392px;
 }
+.fields{
+    height: 30px;
+    width: 392px;
+}
 #birthday{
     height: 30px;
     width: 392px;
 }
-#birthday_label, #categories_label, #confirm_check_label{
+#birthday_label, #categories_label, #confirm_check_label, .fields_label{
     color: white;
     font-size: 20px;
     font-family: Arial;
