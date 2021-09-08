@@ -8,7 +8,7 @@ if (mysqli_num_rows($result) > 0) {
 $from_db = mysqli_fetch_assoc($result);
 } else {
   echo '<style> h1{text-align: center; color: darkred;}</style> <br><br><br><br><br><br><br><br><br><h1>403<h1><br><br><br><br><br><br><br><br><br>';
-  header( "refresh:0;url=authorization.html" );
+  header( "refresh:0;url=index.php" );
 }
 mysqli_close($db_conn);
 ?>
