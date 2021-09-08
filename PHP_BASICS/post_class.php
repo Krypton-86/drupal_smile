@@ -19,10 +19,11 @@ class post_class {
   function getPassword(): string {
     $return_var = htmlentities($_POST['password'], ENT_QUOTES);
     $len = strlen($return_var);
+    if (!array_key_exists('user_id', $_COOKIE)){
     if ($len < 8 || $len > 32) {
       $this->isValid = FALSE;
       array_push($this->errors, "Password: Use passphrase from 8 to 32 symbols.");
-    }
+    }}
     return $return_var;
   }
 
