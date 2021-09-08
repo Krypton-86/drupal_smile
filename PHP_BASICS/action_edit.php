@@ -45,7 +45,7 @@ if ($_post_reg->getValidStatus() && $_post_reg->getConfirmRegCheck()) {
 
   // Run query for writing user info
   if (mysqli_query($db_conn, $db_query)) {
-    echo "User info record edited successfully<br>";
+    echo '<style> h1{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>User info edited successfully!<h1><br><br><br>';
     header( "refresh:1;url=mypage.php" );
   }
   else {

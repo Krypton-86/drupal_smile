@@ -15,9 +15,9 @@ if ($_post_reg->getValidStatus() && $_post_reg->getConfirmRegCheck()) {
     . ");";
   // Run query for writing user info
   if (mysqli_query($db_conn, $db_query)) {
-    echo "New user info record created successfully<br>";
-    echo "____________________________________<br><br>";
-    echo "Dear " . $_post_reg->getFname() . ", <br>You can authorize with your email in this page: <br><a href='/authorization.html'>Log In</a>";
+    echo '<style> h1, h2{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>New user info record created successfully!<h1><br>';
+    echo "Dear " . $_post_reg->getFname() . ", <br><h2>Next time you can authorize with email in this page: <br><a href='/authorization.html'>Log In</a><h2>";
+    header( "refresh:5;url=mypage.php" );
   }
   else {
     echo "Error writing user info: " . $db_query . "<br>" . mysqli_error($db_conn);
