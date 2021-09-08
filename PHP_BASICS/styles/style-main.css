@@ -86,7 +86,7 @@ a {
     width: 190px; 
 }
 
-#email, #password {
+#email, .password {
     height: 30px;
     width: 392px;
 }

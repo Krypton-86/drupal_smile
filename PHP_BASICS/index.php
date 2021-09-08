@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(array_key_exists('user_id', $_COOKIE)){
+  header( "refresh:0;url=mypage.php" );
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +19,7 @@
             <a href="registration.html" target="_self">Sign Up</a>
         </div>
         <div class="active_block">
-            <a href="authorization.html" target="_self">Log In</a>
+            <a href="index.php" target="_self">Log In</a>
         </div>
     </div>
 
