@@ -17,14 +17,15 @@ class post_class {
   }
 
   function getPassword(): string {
-    $return_var = htmlentities($_POST['password'], ENT_QUOTES);
-    $len = strlen($return_var);
-    if (!array_key_exists('user_id', $_COOKIE)){
-    if ($len < 8 || $len > 32) {
-      $this->isValid = FALSE;
-      array_push($this->errors, "Password: Use passphrase from 8 to 32 symbols.");
-    }}
-    return $return_var;
+      $return_var = htmlentities($_POST['password'], ENT_QUOTES);
+      $len = strlen($return_var);
+      if (!array_key_exists('user_id', $_COOKIE)) {
+        if ($len < 8 || $len > 32) {
+          $this->isValid = FALSE;
+          array_push($this->errors, "Password: Use passphrase from 8 to 32 symbols.");
+        }
+      }
+      return $return_var;
   }
 
   function getPasswordHash(): string {
@@ -65,16 +66,18 @@ class post_class {
     $i = 0;
     $categories = [];
     foreach ($_POST['categories'] as $category) {
-        $categories[$i] = htmlentities($category, ENT_QUOTES);
-        $i++;
+      $categories[$i] = htmlentities($category, ENT_QUOTES);
+      $i++;
     }
     return $categories;
   }
+
   function getCategoriesString(): string {
     $categories = ucwords(implode(", ", $this->getCategories()));
     return $categories == "" ? "" : ", " . $categories;
   }
-  function getCategoriesTruesMap() : string {
+
+  function getCategoriesTruesMap(): string {
     return $this->getCategoriesString() == "" ? "" : str_repeat(", true", count($this->getCategories()));
   }
 
