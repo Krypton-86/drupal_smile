@@ -13,7 +13,7 @@
             <a href="registration.html" target="_self">Sign Up</a>
         </div>
         <div class="passive_block">
-            <a href="authorization.html" target="_self">Log In</a>
+            <a href="index.php" target="_self">Log In</a>
         </div>
     </div>
 
@@ -27,7 +27,9 @@
                    size="22" required><br><br>
             <input type="email" id="email" name="email" placeholder="Email Address*" value="" minlength="5"
                    maxlength="50" size="48" required><br><br>
-            <input type="password" id="password" name="password" placeholder="Set A Password*" value="" minlength="8"
+            <input type="password" class="password" name="password" placeholder="Set A Password*" value="" minlength="8"
+                   maxlength="32" size="48" required><br><br>
+            <input type="password" class="password" name="password2" placeholder="Set password again*" value="" minlength="8"
                    maxlength="32" size="48" required><br><br>
             <label id="birthday_label" for="birthday">Birthday:</label>
             <input type="date" id="birthday" name="birthday" min="1925-12-31" required><br>
