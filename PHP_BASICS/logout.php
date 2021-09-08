@@ -11,4 +11,4 @@ echo "<style> h1{text-align: center; color: firebrick}</style> <br><br><br><h1>W
 else {
   echo '<style> h1{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>Logged out!<h1><br><br><br>';
 }
-header( "refresh:3;url=authorization.html" );
+header( "refresh:3;url=index.php" );

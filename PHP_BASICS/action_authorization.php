@@ -1,6 +1,6 @@
 <?php
 session_start();
-session_cache_limiter('private_no_expire');
+
 require 'post_class.php';
 require 'db_connect.php';
 
