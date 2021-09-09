@@ -1,16 +1,9 @@
 <?php
 require 'db_connect.php';
-$db_query = "SELECT * FROM smile.users WHERE user_id='" . $_COOKIE['user_id'] . "';";
-$result = mysqli_query($db_conn, $db_query);
-// Run query for writing user info
-$from_db = [];
-if (mysqli_num_rows($result) > 0) {
-$from_db = mysqli_fetch_assoc($result);
-} else {
-  echo '<style> h1{text-align: center; color: darkred;}</style> <br><br><br><br><br><br><br><br><br><h1>403<h1><br><br><br><br><br><br><br><br><br>';
-  header( "refresh:0;url=index.php" );
-}
-mysqli_close($db_conn);
+require 'user.php';
+
+$user = new user();
+$from_db=$user->info($db_conn);
 ?>
 <!DOCTYPE html>
 <html>
