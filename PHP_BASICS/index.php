@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(array_key_exists('user_id', $_COOKIE)){
+  header( "refresh:0;url=mypage.php" );
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +19,7 @@
             <a href="registration.html" target="_self">Sign Up</a>
         </div>
         <div class="active_block">
-            <a href="authorization.html" target="_self">Log In</a>
+            <a href="index.php" target="_self">Log In</a>
         </div>
     </div>
 
@@ -23,7 +29,7 @@
         <div class="fields_block">
             <input type="email" id="email" name="email" placeholder="Email Address*" value="" minlength="5"
                    maxlength="50" size="48" required><br><br>
-            <input type="password" id="password" name="password" placeholder="Set A Password*" value="" minlength="8"
+            <input type="password" class="password" name="password" placeholder="Set A Password*" value="" minlength="8"
                    maxlength="32" size="48" required><br><br>
             <input type="checkbox" id="remember_check" name="remember_check" value="REMEMBER">
             <label id="confirm_check_label" for="remember_check"> Remember me</label><br><br>

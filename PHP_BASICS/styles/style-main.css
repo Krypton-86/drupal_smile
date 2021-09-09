@@ -1,3 +1,4 @@
+
 .form_block {
     background-color: #24323d;
     box-sizing: border-box;
@@ -72,13 +73,20 @@ a {
     box-sizing: border-box;
     margin: auto; 
 }
+.fields_edit_block{
+    height: 700px;
+    width: 400px;
+    box-sizing: border-box;
+    margin: auto;
+}
+
 
 #fname, #lname {
     height: 30px;
     width: 190px; 
 }
 
-#email, #password {
+#email, .password {
     height: 30px;
     width: 392px;
 }
