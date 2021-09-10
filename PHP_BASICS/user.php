@@ -2,7 +2,11 @@
 
 class user {
 
-  public $db;
+  private $db;
+
+  /**
+   * Creates new DB connection
+   */
   function __construct() {
     $this->db = new db_class();
   }
@@ -11,8 +15,8 @@ class user {
    * Implements user registration
    */
   function register() {
-    $is_registered = TRUE;
     $_post = new post_class();
+    $is_registered = TRUE;
     // Check email is used
     $str = "SELECT user_id FROM smile.users WHERE Email='" . $_post->getEmail() . "';";
     $result = $this->db->query($str);
@@ -57,17 +61,15 @@ class user {
   /**
    * Implements user authorization
    *
-   * @param $db_conn
-   * @param $_post_auth
    */
-  function authorize($db_conn) {
+  function authorize() {
+    $_post = new post_class();
     if ($_post->getValidStatus()) {
       $db_query = "SELECT user_id, Password FROM smile.users WHERE Email='" . $_post->getEmail() . "';";
-      $result = mysqli_query($db_conn, $db_query);
       // Run query for writing user info
-      if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        if (password_verify($_post->getPassword(), $row['Password'])) {
+      $result = $this->db->query($db_query);
+      if (count($result) > 0) {
+        if (password_verify($_post->getPassword(), $result['0']['Password'])) {
           if ($_post->getRememberCheck()) {
             //set cookies
             setcookie("remember", "yes", time() + (86400 * 30), "/"); // 86400 = 1 day
@@ -75,7 +77,7 @@ class user {
           else {
             setcookie("remember", "no", time() + (86400 * 30), "/"); // 86400 = 1 day
           }
-          setcookie("user_id", $row['user_id'], time() + (86400 * 30), "/"); // 86400 = 1 day
+          setcookie("user_id", $result['0']['user_id'], time() + (30), "/"); // 86400 = 1 day
           echo '<style> h1{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>Everything will be OK!<h1><br><br><br>';
           header("refresh:1;url=mypage.php");
         }
@@ -92,10 +94,13 @@ class user {
       //Write validity errors
       echo "<br>" . $_post->getErrors() . "<br>";
     }
-    $conn = NULL;
   }
 
-  function edit($db_conn) {
+  /**
+   * Implements possibility to edit user data in DB
+   */
+  function edit() {
+    $_post = new post_class();
     //UPDATE smile.users SET Cars=False, Books=False, Travel=False, Music=False, Sport=False, IT=False, Movies=False, Games=False, Relax=False, News=False WHERE user_id=2;
     $categories = [
       "Cars" => FALSE,
@@ -110,7 +115,7 @@ class user {
       "News" => FALSE,
     ];
     foreach ($categories as $key => $value1) {
-      foreach ($_post_reg->getCategories() as $value2) {
+      foreach ($_post->getCategories() as $value2) {
         if ($key == $value2) {
           $categories[$key] = TRUE;
         }
@@ -136,37 +141,62 @@ class user {
     if ($_post->getValidStatus() && $_post->getConfirmRegCheck()) {
 
       // Run query for writing user info
-      if (mysqli_query($db_conn, $db_query)) {
-        echo '<style> h1{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>User info edited successfully!<h1><br><br><br>';
-        header("refresh:1;url=mypage.php");
-      }
-      else {
-        echo "Error writing user info: " . $db_query . "<br>" . mysqli_error($db_conn);
-      }
+      $this->db->query($db_query);
+      header("refresh:0;url=mypage.php");
+
     }
     else {
       //Write validity errors
       echo implode("<br>", $_post->getErrors());
     }
-    $conn = NULL;
   }
 
-  function info($db_conn) {
+  /**
+   * Returns array of user info from DB
+   * @return array|false|void
+   */
+  function info() {
     $db_query = "SELECT * FROM smile.users WHERE user_id='" . $_COOKIE['user_id'] . "';";
-    $result = mysqli_query($db_conn, $db_query);
-    // Run query for writing user info
-    $from_db = [];
-    if (mysqli_num_rows($result) > 0) {
-      $from_db = mysqli_fetch_assoc($result);
 
-    }
-    else {
+    // Run query for writing user info
+    $result = $this->db->query($db_query);
+    if (!count($result) > 0) {
       return FALSE;
       echo '<style> h1{text-align: center; color: darkred;}</style> <br><br><br><br><br><br><br><br><br><h1>403<h1><br><br><br><br><br><br><br><br><br>';
-      header("refresh:0;url=index.php");
+      header("refresh:2;url=index.php");
     }
-    return $from_db;
-    $conn = NULL;
+    else {
+      return $result;
+    }
+  }
+
+  /**
+   * Starts PHP session and checks is user authorized before
+   */
+  function start_session(){
+    session_start();
+    if(array_key_exists('user_id', $_COOKIE)){
+      header( "refresh:0;url=mypage.php" );
+    }
+  }
+
+  /**
+   * Ends PHP session and destroys cookies
+   */
+  function end_session(){
+    setcookie("PHPSESSID", "0", time() - (86400), "/"); // 86400 = 1 day
+    setcookie("user_id", "0", time() - (86400), "/"); // 86400 = 1 day
+    setcookie("remember", "0", time() - (86400), "/"); // 86400 = 1 day
+    session_unset();
+    session_destroy();
+
+    if ($_COOKIE['remember'] === "wrong password"){
+      echo "<style> h1{text-align: center; color: firebrick}</style> <br><br><br><h1>Wrong password!</h1><br><br><br>";
+    }
+    else {
+      echo '<style> h1{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>Logged out!<h1><br><br><br>';
+    }
+    header( "refresh:3;url=index.php" );
   }
 
 }
