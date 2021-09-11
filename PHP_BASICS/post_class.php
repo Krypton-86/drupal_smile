@@ -8,6 +8,7 @@ class post_class {
 
   /**
    * Validates user entered Email from $_POST
+   *
    * @return string
    */
   function getEmail(): string {
@@ -21,23 +22,8 @@ class post_class {
   }
 
   /**
-   * Validates user entered Password from $_POST
-   * @return string
-   */
-  function getPassword(): string {
-      $return_var = htmlentities($_POST['password'], ENT_QUOTES);
-      $len = strlen($return_var);
-      if (!array_key_exists('user_id', $_COOKIE)) {
-        if ($len < 8 || $len > 32) {
-          $this->isValid = FALSE;
-          array_push($this->errors, "Password: Use passphrase from 8 to 32 symbols.");
-        }
-      }
-      return $return_var;
-  }
-
-  /**
    * Generates pass hash from $this->getPassword()
+   *
    * @return string
    */
   function getPasswordHash(): string {
@@ -45,7 +31,49 @@ class post_class {
   }
 
   /**
+   * Validates user entered Password from $_POST
+   *
+   * @return string
+   */
+  function getPassword(): string {
+    $return_var = htmlentities($_POST['password'], ENT_QUOTES);
+    if (!array_key_exists('user_id', $_COOKIE)) {
+      if (htmlentities($_POST['password2'], ENT_QUOTES) == $return_var) {
+        $len = strlen($return_var);
+        if ($len < 8 || $len > 32) {
+          $this->isValid = FALSE;
+          array_push($this->errors, "Password: Use passphrase from 8 to 32 symbols.");
+        }
+      }
+      else {
+        $this->isValid = FALSE;
+        array_push($this->errors, "Passwords not match.");
+      }
+    }
+    else {
+      if ($return_var == "" || $_POST['password2'] == "") {
+        return $return_var;
+      }
+      else {
+        if (htmlentities($_POST['password2'], ENT_QUOTES) == $return_var) {
+          $len = strlen($return_var);
+          if ($len < 8 || $len > 32) {
+            $this->isValid = FALSE;
+            array_push($this->errors, "Password: Use passphrase from 8 to 32 symbols.");
+          }
+        }
+        else {
+          $this->isValid = FALSE;
+          array_push($this->errors, "Passwords not match.");
+        }
+      }
+    }
+    return $return_var;
+  }
+
+  /**
    * Validates user entered First name from $_POST
+   *
    * @return string
    */
   function getFname(): string {
@@ -53,13 +81,14 @@ class post_class {
     $len = strlen($return_var);
     if ($len < 2 || $len > 255 || !preg_match("/^[a-zA-Z-' ]*$/", $return_var)) {
       $this->isValid = FALSE;
-      array_push($this->errors, "First name: Only letters and white space allowed, must be longer than one symbol.");
+      array_push($this->errors, "First name: Only letters and white space allowed, name must be longer than one symbol.");
     }
     return htmlentities($return_var, ENT_QUOTES);
   }
 
   /**
    * Validates user entered Last name from $_POST
+   *
    * @return string
    */
   function getLname(): string {
@@ -67,13 +96,14 @@ class post_class {
     $len = strlen($return_var);
     if ($len < 2 || $len > 255 || !preg_match("/^[a-zA-Z-' ]*$/", $return_var)) {
       $this->isValid = FALSE;
-      array_push($this->errors, "Last name: Only letters and white space allowed, must be longer than one symbol.");
+      array_push($this->errors, "Last name: Only letters and white space allowed, name must be longer than one symbol.");
     }
     return htmlentities($return_var, ENT_QUOTES);
   }
 
   /**
    * Validates user entered date from $_POST
+   *
    * @return string
    */
   function getBirthday(): string {
@@ -81,13 +111,34 @@ class post_class {
     $len = strlen($return_var);
     if ($len < 8 || $len > 10 || !preg_match("/^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$/", $return_var)) {
       $this->isValid = FALSE;
-      array_push($this->errors, "Birthdate: Check date.");
+      array_push($this->errors, "Birthdate: Check correct date.");
     }
     return $return_var;
   }
 
   /**
+   * Creates "trues map" of categories (category_name1=true,
+   * category_name2=false...) by selected in form items
+   *
+   * @return string
+   */
+  function getCategoriesTruesMap(): string {
+    return $this->getCategoriesString() == "" ? "" : str_repeat(", true", count($this->getCategories()));
+  }
+
+  /**
+   * Transforms array of Categories to string
+   *
+   * @return string
+   */
+  function getCategoriesString(): string {
+    $categories = ucwords(implode(", ", $this->getCategories()));
+    return $categories == "" ? "" : ", " . $categories;
+  }
+
+  /**
    * Validates user entered Categories from $_POST
+   *
    * @return array
    */
   function getCategories(): array {
@@ -101,25 +152,8 @@ class post_class {
   }
 
   /**
-   * Transforms array of Categories to string
-   * @return string
-   */
-  function getCategoriesString(): string {
-    $categories = ucwords(implode(", ", $this->getCategories()));
-    return $categories == "" ? "" : ", " . $categories;
-  }
-
-  /**
-   * Creates "trues map" of categories (category_name1=true, category_name2=false...)
-   * by selected in form items
-   * @return string
-   */
-  function getCategoriesTruesMap(): string {
-    return $this->getCategoriesString() == "" ? "" : str_repeat(", true", count($this->getCategories()));
-  }
-
-  /**
    * Checks "confirm registration" checkbox is selected
+   *
    * @return bool
    */
   function getConfirmRegCheck(): bool {
@@ -135,6 +169,7 @@ class post_class {
 
   /**
    * Checks "remember me" checkbox is selected
+   *
    * @return bool
    */
   function getRememberCheck(): bool {
@@ -143,6 +178,7 @@ class post_class {
 
   /**
    * Returns status of validity user entered information in $_POST
+   *
    * @return bool
    */
   function getValidStatus(): bool {
@@ -151,6 +187,7 @@ class post_class {
 
   /**
    * Returns array of validity errors
+   *
    * @return array
    */
   function getErrors(): array {

@@ -40,6 +40,8 @@ $from_db=$user->info();
       <label class="fields_label">Password:</label>
       <input type="password" class="fields" name="password" value="" placeholder="Can change your password" minlength="8"
              maxlength="32" size="48"><br><br>
+      <input type="password" class="fields" name="password2" value="" placeholder="Repeat your password" minlength="8"
+               maxlength="32" size="48"><br><br>
       <label class="fields_label">Birthday:</label>
       <input type="date" class="fields" name="birthday" value="<?php echo $from_db['0']['Birthday']?>" min="1925-12-31" required><br><br>
       <label class="fields_label">Interested in:</label>
