@@ -27,32 +27,34 @@ class user {
     else {
       $is_registered = FALSE;
     }
-    if ($_post->getValidStatus() && $_post->getConfirmRegCheck() && !$is_registered) {
-      $db_query = "INSERT INTO smile.users (First_name, Last_name, Email, Birthday, Password" . $_post->getCategoriesString() . ")
+
+    $db_query = "INSERT INTO smile.users (First_name, Last_name, Email, Birthday, Password" . $_post->getCategoriesString() . ")
   VALUES ('" . $_post->getFname()
-        . "', '" . $_post->getLname()
-        . "', '" . $_post->getEmail()
-        . "', '" . $_post->getBirthday()
-        . "', '" . $_post->getPasswordHash()
-        . "'" . $_post->getCategoriesTruesMap()
-        . ");";
+      . "', '" . $_post->getLname()
+      . "', '" . $_post->getEmail()
+      . "', '" . $_post->getBirthday()
+      . "', '" . $_post->getPasswordHash()
+      . "'" . $_post->getCategoriesTruesMap()
+      . ");";
+
+    if ($_post->getValidStatus() && $_post->getConfirmRegCheck() && !$is_registered) {
       // Run query for writing user info
-      $this->db->query($db_query);
+      $result = $this->db->query($db_query);
       $result = $this->db->query($str);
-        if (count($result) > 0) {
-          setcookie("user_id", $result['0']['user_id'], time() + (86400 * 30), "/"); // 86400 = 1 day
-          echo '<style> h1, h2{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>New user info record created successfully!<h1><br>';
-          echo "Dear " . $_post->getFname() . ", <br><h2>Next time you can authorize with email in this page: <br><a href='/index.php'>Log In</a><h2>";
-          header("refresh:5;url=mypage.php");
-        }
+      if (count($result) > 0) {
+        setcookie("user_id", $result['0']['user_id'], time() + (86400 * 30), "/"); // 86400 = 1 day
+        echo '<style> h1, h2{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>New user info record created successfully!<h1><br>';
+        echo "Dear " . $_post->getFname() . ", <br><h2>Next time you can authorize with email in this page: <br><a href='/index.php'>Log In</a><h2>";
+        header("refresh:5;url=mypage.php");
       }
+    }
     else {
       //Write validity errors
       if ($is_registered) {
-        echo '<style> h1, h2{text-align: center; color: firebrick;}</style> <br><br><br><h1>This email registered!<h1><br>';
+        echo '<style> h1, h2{text-align: center; color: firebrick;}</style> <br><br><br><h1>This email was registered before!<h1><br>';
       }
       else {
-        echo implode("<br>", $_post->getErrors());
+        echo "<style> h1, h2{text-align: center; color: firebrick;}</style> <br><br><br><h1>" . implode("<br>", $_post->getErrors()) . "<h1><br><br><br>";
       }
       header("refresh:3;url=registration.html");
     }
@@ -64,35 +66,34 @@ class user {
    */
   function authorize() {
     $_post = new post_class();
+    $db_query = "SELECT user_id, Password FROM smile.users WHERE Email='" . $_post->getEmail() . "';";
     if ($_post->getValidStatus()) {
-      $db_query = "SELECT user_id, Password FROM smile.users WHERE Email='" . $_post->getEmail() . "';";
       // Run query for writing user info
       $result = $this->db->query($db_query);
       if (count($result) > 0) {
         if (password_verify($_post->getPassword(), $result['0']['Password'])) {
           if ($_post->getRememberCheck()) {
             //set cookies
+            setcookie("user_id", $result['0']['user_id'], time() + (86400 * 30), "/"); // 86400 = 1 day
             setcookie("remember", "yes", time() + (86400 * 30), "/"); // 86400 = 1 day
           }
           else {
-            setcookie("remember", "no", time() + (86400 * 30), "/"); // 86400 = 1 day
+            setcookie("user_id", $result['0']['user_id'], time() + (300), "/"); // 86400 = 1 day
+            setcookie("remember", "no", time() + (86400 * 300), "/"); // 86400 = 1 day
           }
-          setcookie("user_id", $result['0']['user_id'], time() + (30), "/"); // 86400 = 1 day
           echo '<style> h1{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>Everything will be OK!<h1><br><br><br>';
           header("refresh:1;url=mypage.php");
         }
         else {
-          setcookie("remember", "wrong password", time() + (30), "/"); // 86400 = 1 day
+          setcookie("remember", "wrong password", time() + (10), "/"); // 86400 = 1 day
           header("refresh:0;url=logout.php");
         }
-      }
-      else {
-        echo "Error finding user info: " . $db_query . "<br>" . mysqli_error($db_conn);
       }
     }
     else {
       //Write validity errors
-      echo "<br>" . $_post->getErrors() . "<br>";
+      echo "<style> h1, h2{text-align: center; color: firebrick;}</style> <br><br><br><h1>" . implode("<br>", $_post->getErrors()) . "<h1><br><br><br>";
+      header("refresh:4;url=index.php");
     }
   }
 
@@ -147,12 +148,14 @@ class user {
     }
     else {
       //Write validity errors
-      echo implode("<br>", $_post->getErrors());
+      echo "<style> h1, h2{text-align: center; color: firebrick;}</style> <br><br><br><h1>" . implode("<br>", $_post->getErrors()) . "<h1><br><br><br>";
+      header("refresh:4;url=personalize.php");
     }
   }
 
   /**
    * Returns array of user info from DB
+   *
    * @return array|false|void
    */
   function info() {
@@ -173,30 +176,34 @@ class user {
   /**
    * Starts PHP session and checks is user authorized before
    */
-  function start_session(){
+  function start_session() {
     session_start();
-    if(array_key_exists('user_id', $_COOKIE)){
-      header( "refresh:0;url=mypage.php" );
+    if (array_key_exists('user_id', $_COOKIE)) {
+      header("refresh:0;url=mypage.php");
     }
+    if ($_COOKIE['remember'] == "no"){
+      header("refresh:0;url=logout.php");
+    }
+
   }
 
   /**
    * Ends PHP session and destroys cookies
    */
-  function end_session(){
+  function end_session() {
     setcookie("PHPSESSID", "0", time() - (86400), "/"); // 86400 = 1 day
     setcookie("user_id", "0", time() - (86400), "/"); // 86400 = 1 day
     setcookie("remember", "0", time() - (86400), "/"); // 86400 = 1 day
     session_unset();
     session_destroy();
 
-    if ($_COOKIE['remember'] === "wrong password"){
+    if ($_COOKIE['remember'] === "wrong password") {
       echo "<style> h1{text-align: center; color: firebrick}</style> <br><br><br><h1>Wrong password!</h1><br><br><br>";
     }
     else {
       echo '<style> h1{text-align: center; color: darkslategrey;}</style> <br><br><br><h1>Logged out!<h1><br><br><br>';
     }
-    header( "refresh:3;url=index.php" );
+    header("refresh:3;url=index.php");
   }
 
 }

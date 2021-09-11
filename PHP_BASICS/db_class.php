@@ -29,15 +29,14 @@ class db_class {
   function query($str) {
     try {
       $stmt = $this->conn->prepare($str);
-      $stmt->execute();
-      // set the resulting array to associative
+      $result = $stmt->execute();
       $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
       return $stmt->fetchAll();
+
     } catch (PDOException $e) {
+      return FALSE;
       $this->err->set_error("Error: " . $e->getMessage());
     }
     $this->conn = NULL;
   }
-
-
 }
