@@ -4,7 +4,7 @@ first_module.test:
     _controller: '\Drupal\first_module\Controller\FirstController::test'
     _title: 'Test'
   requirements:
-    _permission: 'Test access'
+    _permission: 'test access'
 first_module.node-render:
   path: '/smile-test/node-render/{nid}'
   defaults:
