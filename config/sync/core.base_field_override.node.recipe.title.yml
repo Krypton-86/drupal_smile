@@ -1,0 +1,18 @@
+uuid: c9b0b2a6-ed7c-4431-af89-91fb129f5a5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.recipe
+id: node.recipe.title
+field_name: title
+entity_type: node
+bundle: recipe
+label: 'Recip title'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,23 @@
+uuid: 2c9c66de-3027-452a-86f2-94a4131f7603
+langcode: en
+status: true
+dependencies: {  }
+id: recipe_maker
+label: 'Recipe maker'
+weight: 3
+is_admin: null
+permissions:
+  - 'access contextual links'
+  - 'access taxonomy overview'
+  - 'create recipe content'
+  - 'create terms in ingredients'
+  - 'delete any recipe content'
+  - 'delete own recipe content'
+  - 'delete recipe revisions'
+  - 'delete terms in ingredients'
+  - 'edit any recipe content'
+  - 'edit own recipe content'
+  - 'edit terms in ingredients'
+  - 'masquerade as recipe_maker'
+  - 'revert recipe revisions'
+  - 'view recipe revisions'
