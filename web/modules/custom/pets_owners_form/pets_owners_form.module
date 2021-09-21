@@ -11,3 +11,14 @@ function pets_owners_form_form_alter(&$form, FormStateInterface $form_state, $fo
     $form['keys']['#size']        = 26;
   }
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function pets_owners_form_form_search_block_form_alter(
+  &$form,
+  \Drupal\Core\Form\FormStateInterface $form_state,
+  $form_id
+) {
+  unset( $form['keys']);
+}

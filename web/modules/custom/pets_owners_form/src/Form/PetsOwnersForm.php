@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
 class PetsOwnersForm extends FormBase {
 
   /**
-   * Method to build form.
+   * Build form.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['description'] = [
@@ -33,11 +33,10 @@ class PetsOwnersForm extends FormBase {
       '#type' => 'radios',
       '#title' => $this->t('Gender'),
       '#options' => [
-        0 => $this->t('Male'),
-        1 => $this->t('Female'),
-        2 => $this->t('Unknown'),
+        $this->t('male'),
+        $this->t('female'),
+        $this->t('unknown'),
       ],
-      '#default_value' => 2,
       '#required' => TRUE,
     ];
 
@@ -57,7 +56,11 @@ class PetsOwnersForm extends FormBase {
     // Form age.
     $form['age'] = [
       '#type' => 'textfield',
-      '#attributes' => [' type' => 'number'],
+      '#attributes' => [
+        ' type' => 'number',
+        'min' => '1',
+        'max' => '120',
+      ],
       '#title' => $this->t('Age'),
       '#placeholder' => $this->t('Your age'),
       '#required' => TRUE,
@@ -143,7 +146,7 @@ class PetsOwnersForm extends FormBase {
       $form_state->setErrorByName('name', $this->t('Your name is not correct!'));
     }
     if (strlen($name) > 100) {
-      $form_state->setErrorByName('Name', $this->t('Your Name must be 100 symbols max.'));
+      $form_state->setErrorByName('name', $this->t('Your Name must be 100 symbols max.'));
     }
   }
 
@@ -153,10 +156,10 @@ class PetsOwnersForm extends FormBase {
   public function validateAge(array &$form, FormStateInterface $form_state) {
     $age = $form_state->getValue('age');
     if (!is_numeric($age)) {
-      $form_state->setErrorByName('Age', $this->t('Your age must be numeric.'));
+      $form_state->setErrorByName('age', $this->t('Your age must be numeric.'));
     }
     elseif ($age < 0 || $age > 120) {
-      $form_state->setErrorByName('Age', $this->t('Your age should be more than 0 and less than 120'));
+      $form_state->setErrorByName('age', $this->t('Your age should be more than 0 and less than 120'));
     }
   }
 
