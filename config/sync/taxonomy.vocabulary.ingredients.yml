@@ -1,0 +1,8 @@
+uuid: c86c26fc-63fc-4bd8-872e-c32593ba60b3
+langcode: en
+status: true
+dependencies: {  }
+name: Ingredients
+vid: ingredients
+description: 'Ingredients vocabulary'
+weight: 0

@@ -1,0 +1,15 @@
+uuid: fcbc25e8-f5ce-4bdc-b72f-1754f4ed783a
+langcode: en
+status: true
+dependencies: {  }
+name: recipe_images_formatter
+label: recipe_images_formatter
+effects:
+  5de1083b-e9a2-4f00-81ad-ae19ca903762:
+    uuid: 5de1083b-e9a2-4f00-81ad-ae19ca903762
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 512
+      height: 720
+      anchor: center-center

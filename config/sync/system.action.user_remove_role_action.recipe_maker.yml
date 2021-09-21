@@ -1,0 +1,14 @@
+uuid: b6d37196-0c60-49c9-b0a1-c92c242e6953
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.recipe_maker
+  module:
+    - user
+id: user_remove_role_action.recipe_maker
+label: 'Remove the Recipe maker role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: recipe_maker
