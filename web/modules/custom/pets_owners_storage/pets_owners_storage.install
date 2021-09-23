@@ -5,6 +5,9 @@
  * Install, update and uninstall functions for the pets_owners_storage module.
  */
 
+use Drupal\Core\Url;
+use Drupal\Core\Database\Database;
+
 /**
  * Implements hook_install().
  */
@@ -23,7 +26,7 @@ function pets_owners_storage_uninstall() {
  * Implements hook_schema().
  */
 function pets_owners_storage_schema() {
-  $schema['pets_owners_storage_example'] = [
+  $schema['pets_owners_storage'] = [
     'description' => 'Table description.',
     'fields' => [
       'id' => [
@@ -38,59 +41,85 @@ function pets_owners_storage_schema() {
         'default' => 0,
         'description' => 'The {users}.uid of the user who created the record.',
       ],
-      'status' => [
-        'description' => 'Boolean indicating whether this record is active.',
+      'name' => [
+        'description' => 'User`s name.',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'gender' => [
+        'description' => 'User`s gender.',
+        'type' => 'varchar',
+        'length' => 7,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'prefix' => [
+        'description' => 'User`s prefix.',
+        'type' => 'varchar',
+        'length' => 3,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'age' => [
+        'description' => 'User`s age.',
         'type' => 'int',
-        'unsigned' => TRUE,
         'not null' => TRUE,
         'default' => 0,
         'size' => 'tiny',
       ],
-      'type' => [
-        'type' => 'varchar_ascii',
-        'length' => 64,
+      'mother_name' => [
+        'description' => 'User mother`s name.',
+        'type' => 'varchar',
+        'length' => 100,
         'not null' => TRUE,
         'default' => '',
-        'description' => 'Type of the record.',
       ],
-      'created' => [
+      'father_name' => [
+        'description' => 'User father`s name.',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'have_pets' => [
+        'description' => 'Boolean indicating whether user have pets.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
-        'description' => 'Timestamp when the record was created.',
+        'size' => 'tiny',
       ],
-      'data' => [
-        'type' => 'blob',
+      'pets_name' => [
+        'description' => 'User`s pets name(s).',
+        'type' => 'varchar',
+        'length' => 255,
         'not null' => TRUE,
-        'size' => 'big',
-        'description' => 'The arbitrary data for the item.',
+        'default' => '',
       ],
+      'email' => [
+        'description' => 'User`s Email.',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'created' => [
+        'description' => 'Timestamp when the record was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+
     ],
     'primary key' => ['id'],
     'indexes' => [
-      'type' => ['type'],
+      'email' => ['email'],
       'uid' => ['uid'],
-      'status' => ['status'],
+      'have_pets' => ['have_pets'],
     ],
   ];
 
   return $schema;
 }
 
-/**
- * Implements hook_requirements().
- */
-function pets_owners_storage_requirements($phase) {
-  $requirements = [];
-
-  if ($phase == 'runtime') {
-    $value = mt_rand(0, 100);
-    $requirements['pets_owners_storage_status'] = [
-      'title' => t('pets_owners_storage status'),
-      'value' => t('pets_owners_storage value: @value', ['@value' => $value]),
-      'severity' => $value > 50 ? REQUIREMENT_INFO : REQUIREMENT_WARNING,
-    ];
-  }
-
-  return $requirements;
-}
