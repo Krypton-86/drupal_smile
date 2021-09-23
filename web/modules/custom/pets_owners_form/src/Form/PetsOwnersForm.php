@@ -15,107 +15,144 @@ class PetsOwnersForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['description'] = [
-      '#type' => 'item',
+      '#type'   => 'item',
       '#markup' => $this->t('Form for pets owners'),
     ];
 
     // Name.
     $form['name'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Name'),
+      '#type'        => 'textfield',
+      '#title'       => $this->t('Name'),
       '#placeholder' => $this->t('Enter your name'),
-      '#description' => $this->t('Name must be at least 5 characters in length.'),
-      '#required' => TRUE,
+      '#description' => $this->t(
+        'Name must be at least 5 characters in length.'
+      ),
+      '#required'    => TRUE,
     ];
 
     // Gender.
-    $form['settings']['gender'] = [
-      '#type' => 'radios',
-      '#title' => $this->t('Gender'),
-      '#options' => [
-        $this->t('male'),
-        $this->t('female'),
-        $this->t('unknown'),
+    $form['gender']['type'] = [
+      '#type'       => 'radios',
+      '#title'      => $this->t('Gender'),
+      '#attributes' => [
+        'name' => 'gender',
       ],
-      '#required' => TRUE,
+      '#options'    => [
+        'male' => $this->t('male'),
+        'female' => $this->t('female'),
+        'unknown' => $this->t('unknown'),
+      ],
+      '#required'   => TRUE,
     ];
 
-    // Prefix.
-    $form['settings']['prefix'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Prefix'),
+    // Prefix mr for 'male' gender option.
+    $form['gender']['prefix_mr'] = [
+      '#type'    => 'select',
+      '#title'   => $this->t('Prefix'),
+      '#options' => [
+        'prefix' => [
+          'mr'  => $this->t('mr'),
+        ],
+      ],
+      '#states'  => [
+        'visible' => [
+          ':input[name="gender"]' => ['value' => 'male'],
+        ],
+      ],
+    ];
+
+    // Prefix ms, mrs for 'female' gender option.
+    $form['gender']['prefix_mrs_ms'] = [
+      '#type'    => 'select',
+      '#title'   => $this->t('Prefix'),
+      '#options' => [
+        'prefix' => [
+          'mrs' => $this->t('mrs'),
+          'ms'  => $this->t('ms'),
+        ],
+      ],
+      '#states'  => [
+        'visible' => [
+          ':input[name="gender"]' => ['value' => 'female'],
+        ],
+      ],
+    ];
+    // Prefix mr, ms, mrs for 'unknown' gender option.
+    $form['gender']['prefix_mr_mrs_ms'] = [
+      '#type'    => 'select',
+      '#title'   => $this->t('Prefix'),
       '#options' => [
         'prefix' => [
           'mr' => $this->t('mr'),
           'mrs' => $this->t('mrs'),
-          'ms' => $this->t('ms'),
+          'ms'  => $this->t('ms'),
+        ],
+      ],
+      '#states'  => [
+        'visible' => [
+          ':input[name="gender"]' => ['value' => 'unknown'],
         ],
       ],
     ];
 
     // Form age.
     $form['age'] = [
-      '#type' => 'textfield',
-      '#attributes' => [
+      '#type'        => 'textfield',
+      '#attributes'  => [
         ' type' => 'number',
-        'min' => '1',
-        'max' => '120',
+        'min'   => '1',
+        'max'   => '120',
       ],
-      '#title' => $this->t('Age'),
+      '#title'       => $this->t('Age'),
       '#placeholder' => $this->t('Your age'),
-      '#required' => TRUE,
+      '#required'    => TRUE,
     ];
 
     // Parent form.
     $form['parent'] = [
-      '#type' => 'details',
-    // '#open' => TRUE,
+      '#type'  => 'details',
+      // '#open' => TRUE,
       '#title' => $this->t('Parents'),
     ];
 
     $form['parent']['mother'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t("Mother's name"),
+      '#type'        => 'textfield',
+      '#title'       => $this->t("Mother's name"),
       '#placeholder' => $this->t("Mother's name"),
     ];
 
     $form['parent']['father'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t("Father's name"),
+      '#type'        => 'textfield',
+      '#title'       => $this->t("Father's name"),
       '#placeholder' => $this->t("Father's name"),
     ];
 
     // Have you some pets?.
     $form['have_pets'] = [
-      '#type' => 'checkbox',
+      '#type'  => 'checkbox',
       '#title' => 'Have you some pets?',
     ];
+
     $form['pets'] = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => 'pets',
-      ],
+      '#type'   => 'textfield',
+      '#title'  => $this->t('Names of your pets'),
       '#states' => [
         'invisible' => [
           ':input[name="have_pets"]' => ['checked' => FALSE],
         ],
       ],
     ];
-    $form['pets']['have'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Names of your pets'),
-    ];
 
     // Email.
     $form['email'] = [
-      '#type' => 'email',
-      '#title' => $this->t('Email'),
+      '#type'     => 'email',
+      '#title'    => $this->t('Email'),
       '#required' => TRUE,
     ];
 
     // Button.
     $form['button'] = [
-      '#type' => 'submit',
+      '#type'  => 'submit',
       '#value' => 'Ok',
     ];
     return $form;
@@ -136,17 +173,32 @@ class PetsOwnersForm extends FormBase {
   }
 
   /**
+   * Validate form.
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    $this->validateName($form_state);
+    $this->validateAge($form_state);
+    $this->validateEmail($form_state);
+  }
+
+  /**
    * Validate form Name.
    */
   private function validateName(&$form_state) {
-    $name = $form_state->getValue('name');
+    $name        = $form_state->getValue('name');
     $namePattern = "/^[a-zA-z]*$/i";
-    $valid = preg_match($namePattern, $name);
+    $valid       = preg_match($namePattern, $name);
     if ($valid == FALSE) {
-      $form_state->setErrorByName('name', $this->t('Your name is not correct!'));
+      $form_state->setErrorByName(
+        'name',
+        $this->t('Your name is not correct!')
+      );
     }
     if (strlen($name) > 100) {
-      $form_state->setErrorByName('name', $this->t('Your Name must be 100 symbols max.'));
+      $form_state->setErrorByName(
+        'name',
+        $this->t('Your Name must be 100 symbols max.')
+      );
     }
   }
 
@@ -159,7 +211,10 @@ class PetsOwnersForm extends FormBase {
       $form_state->setErrorByName('age', $this->t('Your age must be numeric.'));
     }
     elseif ($age < 0 || $age > 120) {
-      $form_state->setErrorByName('age', $this->t('Your age should be more than 0 and less than 120'));
+      $form_state->setErrorByName(
+        'age',
+        $this->t('Your age should be more than 0 and less than 120')
+      );
     }
   }
 
@@ -167,21 +222,15 @@ class PetsOwnersForm extends FormBase {
    * Validate form Email.
    */
   private function validateEmail(&$form_state) {
-    $email = $form_state->getValue('email');
+    $email        = $form_state->getValue('email');
     $emailPattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i";
-    $valid = preg_match($emailPattern, $email);
+    $valid        = preg_match($emailPattern, $email);
     if ($valid == FALSE) {
-      $form_state->setErrorByName('email', $this->t('Your email is not correct!'));
+      $form_state->setErrorByName(
+        'email',
+        $this->t('Your email is not correct!')
+      );
     }
-  }
-
-  /**
-   * Validate form.
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    $this->validateName($form_state);
-    $this->validateAge($form_state);
-    $this->validateEmail($form_state);
   }
 
 }
