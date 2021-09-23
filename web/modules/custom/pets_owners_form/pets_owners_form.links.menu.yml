@@ -1,0 +1,7 @@
+pets_owners_form.link:
+  title: Pets owners
+  route_name: pets_owners_form.pets_owners_form
+  expanded: FALSE
+  options:
+    attributes:
+      target: _blank
