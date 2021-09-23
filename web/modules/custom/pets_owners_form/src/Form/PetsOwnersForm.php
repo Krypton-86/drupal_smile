@@ -138,7 +138,7 @@ class PetsOwnersForm extends FormBase {
   /**
    * Validate form Name.
    */
-  public function validateName(array &$form, FormStateInterface $form_state) {
+  private function validateName(&$form_state) {
     $name = $form_state->getValue('name');
     $namePattern = "/^[a-zA-z]*$/i";
     $valid = preg_match($namePattern, $name);
@@ -153,7 +153,7 @@ class PetsOwnersForm extends FormBase {
   /**
    * Validate form Age.
    */
-  public function validateAge(array &$form, FormStateInterface $form_state) {
+  private function validateAge(&$form_state) {
     $age = $form_state->getValue('age');
     if (!is_numeric($age)) {
       $form_state->setErrorByName('age', $this->t('Your age must be numeric.'));
@@ -166,7 +166,7 @@ class PetsOwnersForm extends FormBase {
   /**
    * Validate form Email.
    */
-  public function validateEmail(array &$form, FormStateInterface $form_state) {
+  private function validateEmail(&$form_state) {
     $email = $form_state->getValue('email');
     $emailPattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i";
     $valid = preg_match($emailPattern, $email);
@@ -179,11 +179,9 @@ class PetsOwnersForm extends FormBase {
    * Validate form.
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    $form_var = $form;
-    $form_st = $form_state;
-    $this->validateName($form_var, $form_st);
-    $this->validateAge($form_var, $form_st);
-    $this->validateEmail($form_var, $form_st);
+    $this->validateName($form_state);
+    $this->validateAge($form_state);
+    $this->validateEmail($form_state);
   }
 
 }
