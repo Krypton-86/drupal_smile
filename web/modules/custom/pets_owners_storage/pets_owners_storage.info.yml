@@ -1,0 +1,6 @@
+name: pets_owners_storage
+type: module
+description: add new table and store the data from the form provided by “pets_owners_form”
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9
