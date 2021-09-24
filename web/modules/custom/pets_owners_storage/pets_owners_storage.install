@@ -101,7 +101,7 @@ function pets_owners_storage_schema() {
     'primary key' => ['id'],
     'indexes' => [
       'email' => ['email'],
-      'uid' => ['uid'],
+      'id' => ['id'],
       'have_pets' => ['have_pets'],
     ],
   ];
