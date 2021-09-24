@@ -1,0 +1,15 @@
+pets_owners_storage.inforender:
+  path: '/pets_owners/all'
+  defaults:
+    _controller: '\Drupal\pets_owners_storage\Controller\PetsOwnersStorage::getInfo'
+    _title: 'All pets owners'
+  requirements:
+    _custom_access: '\Drupal\pets_owners_storage\Controller\PetsOwnersStorage::access'
+pets_owners_storage.infodeleter:
+  path: '/pets_owners/delete/{id}'
+  defaults:
+    _controller: '\Drupal\pets_owners_storage\Controller\PetsOwnersStorage::deleteInfo'
+    _title: 'Delete record'
+  requirements:
+    _custom_access: '\Drupal\pets_owners_storage\Controller\PetsOwnersStorage::access'
+    id: \d+
