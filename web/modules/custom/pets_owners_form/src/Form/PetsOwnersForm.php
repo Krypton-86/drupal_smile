@@ -31,7 +31,7 @@ class PetsOwnersForm extends FormBase {
     ];
 
     // Gender.
-    $form['gender']['type'] = [
+    $form['gender'] = [
       '#type'       => 'radios',
       '#title'      => $this->t('Gender'),
       '#attributes' => [
@@ -42,43 +42,10 @@ class PetsOwnersForm extends FormBase {
         'female'  => $this->t('female'),
         'unknown' => $this->t('unknown'),
       ],
-      '#required'   => TRUE,
     ];
 
-    // Prefix mr for 'male' gender option.
-    $form['gender']['prefix_mr'] = [
-      '#type'    => 'select',
-      '#title'   => $this->t('Prefix'),
-      '#options' => [
-        'prefix' => [
-          'mr' => $this->t('mr'),
-        ],
-      ],
-      '#states'  => [
-        'visible' => [
-          ':input[name="gender"]' => ['value' => 'male'],
-        ],
-      ],
-    ];
-
-    // Prefix ms, mrs for 'female' gender option.
-    $form['gender']['prefix_mrs_ms'] = [
-      '#type'    => 'select',
-      '#title'   => $this->t('Prefix'),
-      '#options' => [
-        'prefix' => [
-          'mrs' => $this->t('mrs'),
-          'ms'  => $this->t('ms'),
-        ],
-      ],
-      '#states'  => [
-        'visible' => [
-          ':input[name="gender"]' => ['value' => 'female'],
-        ],
-      ],
-    ];
-    // Prefix mr, ms, mrs for 'unknown' gender option.
-    $form['gender']['prefix_mr_mrs_ms'] = [
+    // Prefix mr, ms, mrs.
+    $form['prefix'] = [
       '#type'    => 'select',
       '#title'   => $this->t('Prefix'),
       '#options' => [
@@ -89,7 +56,7 @@ class PetsOwnersForm extends FormBase {
         ],
       ],
       '#states'  => [
-        'visible' => [
+        'invisible' => [
           ':input[name="gender"]' => ['value' => 'unknown'],
         ],
       ],
@@ -167,8 +134,30 @@ class PetsOwnersForm extends FormBase {
 
   /**
    * Display “Thank you” .
+   *
+   * @throws \Exception
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $fields = [
+      'name' => $form_state->getValue('name'),
+      'gender' => $form_state->getValue('gender'),
+      'prefix' => $form_state->getValue('prefix'),
+      'age' => $form_state->getValue('age'),
+      'mother_name' => $form_state->getValue('mother'),
+      'father_name' => $form_state->getValue('father'),
+      'have_pets' => $form_state->getValue('have_pets'),
+      'pets_name' => $form_state->getValue('pets'),
+      'email' => $form_state->getValue('email'),
+    ];
+    try {
+      \Drupal::database()
+        ->insert('pets_owners_storage')
+        ->fields($fields)
+        ->execute();
+    }
+    catch (\Exception $e) {
+      $this->messenger()->addMessage($this->t('Error: $e'));
+    }
     $this->messenger()->addMessage($this->t('Thank you!'));
   }
 
