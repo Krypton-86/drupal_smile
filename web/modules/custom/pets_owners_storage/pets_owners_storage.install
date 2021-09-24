@@ -34,13 +34,6 @@ function pets_owners_storage_schema() {
         'not null' => TRUE,
         'description' => 'Primary Key: Unique record ID.',
       ],
-      'uid' => [
-        'type' => 'int',
-        'unsigned' => TRUE,
-        'not null' => TRUE,
-        'default' => 0,
-        'description' => 'The {users}.uid of the user who created the record.',
-      ],
       'name' => [
         'description' => 'User`s name.',
         'type' => 'varchar',
@@ -104,13 +97,6 @@ function pets_owners_storage_schema() {
         'not null' => TRUE,
         'default' => '',
       ],
-      'created' => [
-        'description' => 'Timestamp when the record was created.',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ],
-
     ],
     'primary key' => ['id'],
     'indexes' => [
