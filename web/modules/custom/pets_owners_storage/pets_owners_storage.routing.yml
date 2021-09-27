@@ -13,3 +13,11 @@ pets_owners_storage.infodeleter:
   requirements:
     _custom_access: '\Drupal\pets_owners_storage\Controller\PetsOwnersStorage::access'
     id: \d+
+pets_owners_storage.infodediter:
+  path: '/pets_owners/edit/{id}'
+  defaults:
+    _form: '\Drupal\pets_owners_storage\Form\PetsOwnersStorageEditForm'
+    _title: 'Edit record'
+  requirements:
+    _custom_access: '\Drupal\pets_owners_storage\Controller\PetsOwnersStorage::access'
+    id: \d+

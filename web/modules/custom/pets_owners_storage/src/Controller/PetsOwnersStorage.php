@@ -57,10 +57,16 @@ class PetsOwnersStorage {
           $headers[$h] = $key;
           $h++;
         }
+        elseif ($h == 10) {
+          $headers[$h] = "Action A";
+          $h++;
+          $headers[$h] = "Action B";
+        }
         $rows[$r][$v] = $value;
         $v++;
       }
       $rows[$r][$v] = Link::fromTextAndUrl('Delete', Url::fromUserInput("/pets_owners/delete/" . $rows[$r][0]));
+      $rows[$r][$v + 1] = Link::fromTextAndUrl('Edit', Url::fromUserInput("/pets_owners/edit/" . $rows[$r][0]));
       $v = 0;
       $r++;
     }
@@ -71,13 +77,6 @@ class PetsOwnersStorage {
       '#empty' => '',
     ];
     return $content;
-  }
-
-  /**
-   * Implements editing information in database.
-   */
-  public function editInfo($id, $field, $value) {
-
   }
 
   /**
