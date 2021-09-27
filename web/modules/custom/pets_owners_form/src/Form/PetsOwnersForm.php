@@ -14,6 +14,26 @@ class PetsOwnersForm extends FormBase {
    * Build form.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = $this->getFormParamArray();
+    // Button "OK".
+    $form['button'] = [
+      '#type'  => 'submit',
+      '#value' => 'Ok',
+    ];
+    return $form;
+  }
+
+  /**
+   * Get form id.
+   */
+  public function getFormId() {
+    return 'pets_owners_form';
+  }
+
+  /**
+   * Returns form params as array form[].
+   */
+  public function getFormParamArray() : array {
     $form['description'] = [
       '#type'   => 'item',
       '#markup' => $this->t('Form for pets owners'),
@@ -116,26 +136,11 @@ class PetsOwnersForm extends FormBase {
       '#title'    => $this->t('Email'),
       '#required' => TRUE,
     ];
-
-    // Button.
-    $form['button'] = [
-      '#type'  => 'submit',
-      '#value' => 'Ok',
-    ];
     return $form;
   }
 
   /**
-   * Get form id.
-   */
-  public function getFormId() {
-    return 'pets_owners_form';
-  }
-
-  /**
-   * Display “Thank you” .
-   *
-   * @throws \Exception
+   * Implements submit.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $fields = [
@@ -159,6 +164,7 @@ class PetsOwnersForm extends FormBase {
       $this->messenger()->addMessage($this->t('Error: $e'));
     }
     $this->messenger()->addMessage($this->t('Thank you!'));
+    $form_state->setRedirect('pets_owners_storage.inforender');
   }
 
   /**
