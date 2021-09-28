@@ -1,7 +1,6 @@
 pets_owners_form.link:
-  title: Pets owners
+  title: Add pets owner
   route_name: pets_owners_form.pets_owners_form
   expanded: FALSE
-  options:
-    attributes:
-      target: _blank
+  weight: 1
+  parent: pets_owners_storage.list

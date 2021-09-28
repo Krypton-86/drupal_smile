@@ -62,24 +62,31 @@ class PetsOwnersForm extends FormBase {
         'female'  => $this->t('female'),
         'unknown' => $this->t('unknown'),
       ],
+      '#ajax' => [
+            // don't forget :: when calling a class method.
+        'callback' => '::prefixAjaxCallback',
+        'event' => 'change',
+        'wrapper' => 'edit-prefix',
+        'effect' => 'slide',
+        'progress' => [
+          'type' => 'throbber',
+          'disable-refocus' => FALSE,
+          'message' => $this->t('Generating prefix...'),
+        ],
+      ],
     ];
 
     // Prefix mr, ms, mrs.
     $form['prefix'] = [
       '#type'    => 'select',
-      '#title'   => $this->t('Prefix'),
+      '#title' => $this->t('Prefix'),
       '#options' => [
-        'prefix' => [
-          'mr'  => $this->t('mr'),
-          'mrs' => $this->t('mrs'),
-          'ms'  => $this->t('ms'),
-        ],
+        'mr' => $this->t('mr'),
+        'mrs' => $this->t('mrs'),
+        'ms'  => $this->t('ms'),
       ],
-      '#states'  => [
-        'invisible' => [
-          ':input[name="gender"]' => ['value' => 'unknown'],
-        ],
-      ],
+      '#empty_option' => t('- Select -'),
+      '#empty_value' => '_no',
     ];
 
     // Form age.
@@ -139,6 +146,35 @@ class PetsOwnersForm extends FormBase {
     return $form;
   }
 
+  // /**
+  //   * Implements Ajax response for prefix item selection by gender.
+  //   */
+  //  public function prefixAjaxCallback(array &$form, FormStateInterface $form_state) {
+  //    switch ($form_state->getValue('gender')) {
+  //      case 'male':
+  //        $form['prefix']['#type'] = 'select';
+  //        $form['prefix']['#title'] = $this->t('Prefix');
+  //        $form['prefix']['#options'] = [
+  //          'mr'  => $this->t('mr'),
+  //        ];
+  //        break;
+  //
+  //      case 'female':
+  //        $form['prefix']['#type'] = 'select';
+  //        $form['prefix']['#title'] = $this->t('Prefix');
+  //        $form['prefix']['#options'] = [
+  //          'mrs' => $this->t('mrs'),
+  //          'ms'  => $this->t('ms'),
+  //        ];
+  //        break;
+  //
+  //      case 'unknown':
+  //        $form['prefix']['#options'] = [];
+  //        break;
+  //    }
+  //    return $form['prefix'];
+  //  }
+
   /**
    * Implements submit.
    */
@@ -161,7 +197,7 @@ class PetsOwnersForm extends FormBase {
         ->execute();
     }
     catch (\Exception $e) {
-      $this->messenger()->addMessage($this->t('Error: $e'));
+      $this->messenger()->addMessage($this->t("Error:") . $e);
     }
     $this->messenger()->addMessage($this->t('Thank you!'));
     $form_state->setRedirect('pets_owners_storage.inforender');

@@ -102,7 +102,7 @@ class PetsOwnersStorageEditForm extends FormBase {
         ->condition('id', $form_state->get('id'))
         ->execute();
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       $this->messenger()->addMessage($this->t('Error: $e'));
     }
     $this->messenger()->addMessage($this->t('Thank you!'));
@@ -110,12 +110,11 @@ class PetsOwnersStorageEditForm extends FormBase {
   }
 
   /**
-   * Implements deleting by pressing button "delete" in edit form.
+   * Implements redirect by pressing button "delete" in edit form.
    */
   public function delete(array &$form, FormStateInterface $form_state) {
-    $delete = new PetsOwnersStorage();
-    $delete->deleteInfo($form_state->get('id'));
-    $form_state->setRedirect('pets_owners_storage.inforender');
+    $id = ['id' => $form_state->get('id')];
+    $form_state->setRedirect('pets_owners_storage.confirmdelete', $id);
   }
 
   /**
