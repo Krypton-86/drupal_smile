@@ -65,7 +65,7 @@ class PetsOwnersStorage {
         $rows[$r][$v] = $value;
         $v++;
       }
-      $rows[$r][$v] = Link::fromTextAndUrl('Delete', Url::fromUserInput("/pets_owners/delete/" . $rows[$r][0]));
+      $rows[$r][$v] = Link::fromTextAndUrl('Delete', Url::fromUserInput("/pets_owners/confirm/" . $rows[$r][0] . "/delete"));
       $rows[$r][$v + 1] = Link::fromTextAndUrl('Edit', Url::fromUserInput("/pets_owners/edit/" . $rows[$r][0]));
       $v = 0;
       $r++;
@@ -87,9 +87,6 @@ class PetsOwnersStorage {
       ->delete('pets_owners_storage')
       ->condition('id', $id)
       ->execute();
-    return [
-      '#markup' => '<p>' . "User data with id:" . ("$id") . " successfully deleted ($result record affected)" . '</p>',
-    ];
   }
 
 }

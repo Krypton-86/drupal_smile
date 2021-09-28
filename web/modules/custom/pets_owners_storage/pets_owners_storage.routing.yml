@@ -5,6 +5,14 @@ pets_owners_storage.inforender:
     _title: 'All pets owners'
   requirements:
     _custom_access: '\Drupal\pets_owners_storage\Controller\PetsOwnersStorage::access'
+pets_owners_storage.confirmdelete:
+  path: '/pets_owners/confirm/{id}/delete'
+  defaults:
+    _form: '\Drupal\pets_owners_storage\Form\ConfirmDeleteForm'
+    _title: 'Confirm Delete'
+  requirements:
+    _custom_access: '\Drupal\pets_owners_storage\Controller\PetsOwnersStorage::access'
+    id: \d+
 pets_owners_storage.infodeleter:
   path: '/pets_owners/delete/{id}'
   defaults:
