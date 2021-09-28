@@ -1,0 +1,4 @@
+administer my_ajax configuration:
+  title: 'Administer my_ajax configuration'
+  description: 'Optional description.'
+  restrict access: true

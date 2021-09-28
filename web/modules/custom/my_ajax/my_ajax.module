@@ -1,0 +1,6 @@
+<?php
+
+function my_ajax_preprocess_node__page(array &$variables) : void {
+  //Module name: 'my_ajax', library name: 'my_ajax'.
+  $variables['#attached']['library'][] = 'my_ajax/my_ajax';
+}

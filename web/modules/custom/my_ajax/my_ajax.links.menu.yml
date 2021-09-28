@@ -1,0 +1,10 @@
+my_ajax.description:
+  title: 'My AJAX'
+  route_name: 'my_ajax.description'
+  expanded: TRUE
+
+my_ajax.fields:
+  title: 'Generate fields'
+  route_name: 'my_ajax.fields'
+  parent: my_ajax.description
+  weight: 1
