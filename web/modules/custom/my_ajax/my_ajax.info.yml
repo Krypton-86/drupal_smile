@@ -1,0 +1,6 @@
+name: my_ajax
+type: module
+description: This is my custom module to learning Ajax basics.
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9
