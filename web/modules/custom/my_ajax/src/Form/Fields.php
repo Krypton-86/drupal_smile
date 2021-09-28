@@ -2,11 +2,13 @@
 
 namespace Drupal\my_ajax\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Show textfields based on AJAX-enabled checkbox clicks.
+ * Show fields based on AJAX-enabled checkbox clicks.
  *
  * @ingroup ajax_example
  */
@@ -22,12 +24,7 @@ class Fields extends FormBase {
   /**
    * {@inheritdoc}
    *
-   * This form has two checkboxes which the user can check in order to then
-   * reveal the first and/or last name text fields.
-   *
-   * We could perform this behavior with #states. We might not want to if, for
-   * instance, we wanted to require a name, but let the user choose whether
-   * to enter first or last or both.
+   * This form has two checkboxes which the user can check fields.
    *
    * For all the requests this class gets, the buildForm() method will always be
    * called. If an AJAX request comes in, the form state will be set to the
@@ -35,24 +32,21 @@ class Fields extends FormBase {
    * one of our checkboxes, it will be checked in $form_state.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['description'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('This form demonstrates changing the status of form elements through AJAX requests.'),
-    ];
-    $form['ask_first_name'] = [
+
+    $form['checkbox_1'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Ask me my first name'),
+      '#title' => $this->t('checkbox #1'),
       '#ajax' => [
-        'callback' => '::fieldsCallback',
+        'callback' => '::textfieldsCallback',
         'wrapper' => 'fields-container',
         'effect' => 'fade',
       ],
     ];
-    $form['ask_last_name'] = [
+    $form['checkbox_2'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Ask me my last name'),
+      '#title' => $this->t('checkbox #2'),
       '#ajax' => [
-        'callback' => '::fieldsCallback',
+        'callback' => '::urlfieldsCallback',
         'wrapper' => 'fields-container',
         'effect' => 'fade',
       ],
@@ -62,7 +56,12 @@ class Fields extends FormBase {
     // AJAX.
     $form['fields_container'] = [
       '#type' => 'container',
-      '#attributes' => ['id' => 'fields-container'],
+      '#attributes' => [
+        'id' => 'fields-container',
+        'style' => [
+          'display:none;',
+        ],
+      ],
     ];
     $form['fields_container']['fields'] = [
       '#type' => 'fieldset',
@@ -70,28 +69,13 @@ class Fields extends FormBase {
       '#description' => $this->t('This is where we put automatically generated fields'),
     ];
 
-    // This form is rebuilt on all requests, so whether or not the request comes
-    // from AJAX, we should rebuild everything based on the form state.
-    // Checkbox values are expressed as 1 or 0, so we have to be sure to compare
-    // type as well as value.
-    if ($form_state->getValue('ask_first_name', NULL) === 1) {
-      $form['fields_container']['fields']['first_name'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('First Name'),
-        '#required' => TRUE,
-      ];
-    }
-    if ($form_state->getValue('ask_last_name', NULL) === 1) {
-      $form['fields_container']['fields']['last_name'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Last Name'),
-        '#required' => TRUE,
-      ];
-    }
-
-    $form['fields_container']['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Click Me'),
+    $form['ajax_url'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'ajax_url',
+        ],
+      ],
     ];
 
     return $form;
@@ -112,13 +96,51 @@ class Fields extends FormBase {
   }
 
   /**
-   * Callback for ajax_example_autotextfields.
-   *
-   * Selects the piece of the form we want to use as replacement markup and
-   * returns it as a form (renderable array).
+   * Implements action for checkbox #1.
    */
-  public function fieldsCallback($form, FormStateInterface $form_state) {
+  public function textfieldsCallback($form, FormStateInterface $form_state) {
+    if ($form_state->getValue('checkbox_1', NULL) === 1) {
+      $form['fields_container']['fields']['first_name'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('First Name'),
+        '#required' => TRUE,
+      ];
+      $form['fields_container']['fields']['last_name'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Last Name'),
+        '#required' => TRUE,
+      ];
+      $form['fields_container']['submit'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Submit'),
+      ];
+    }
+    else {
+      $form['fields_container'] = [
+        '#attributes' => [
+          'style' => [
+            'display:none;',
+          ],
+        ],
+      ];
+    }
     return $form['fields_container'];
+  }
+
+  /**
+   * Implements action for checkbox #2.
+   */
+  public function urlfieldsCallback($form, FormStateInterface $form_state) {
+    $ajax_response = new AjaxResponse();
+    $selector = '.ajax_url';
+    if ($form_state->getValue('checkbox_2') === 1) {
+      $render = '<a href="https://google.com/">go to google.com/</a>';
+    }
+    else {
+      $render = '';
+    }
+    $ajax_response->addCommand(new HtmlCommand($selector, $render));
+    return $ajax_response;
   }
 
 }
