@@ -65,7 +65,8 @@ class PetsOwnersStorage {
         $rows[$r][$v] = $value;
         $v++;
       }
-      $rows[$r][$v] = Link::fromTextAndUrl('Delete', Url::fromUserInput("/pets_owners/confirm/" . $rows[$r][0] . "/delete"));
+      $link = ['#markup' => "<a class='use-ajax' data-dialog-options='{&quot;width&quot;:200}' data-dialog-type='dialog' data-dialog-renderer='off_canvas' href='/pets_owners/confirm/" . $rows[$r][0] . "/delete'>Delete</a>"];
+      $rows[$r][$v] = \Drupal::service('renderer')->render($link);
       $rows[$r][$v + 1] = Link::fromTextAndUrl('Edit', Url::fromUserInput("/pets_owners/edit/" . $rows[$r][0]));
       $v = 0;
       $r++;

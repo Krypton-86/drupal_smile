@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @file
- * Primary module hooks for pets_owners_storage module.
- *
- * @DCG
- * This file is no longer required in Drupal 8.
- * @see https://www.drupal.org/node/2217931
- */
+function pets_owners_storage_preprocess_node__page(array &$variables) : void {
+  //Module name: 'pets_owners_storage', library name: 'pets_owners_storage'.
+  $variables['#attached']['library'][] = 'pets_owners_storage/pets_owners_storage';
+}
