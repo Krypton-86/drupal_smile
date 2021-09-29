@@ -63,17 +63,12 @@ class Fields extends FormBase {
         ],
       ],
     ];
-    $form['fields_container']['fields'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t("Generated text fields for first and last name"),
-      '#description' => $this->t('This is where we put automatically generated fields'),
-    ];
 
-    $form['ajax_url'] = [
+    $form['url_container'] = [
       '#type' => 'container',
       '#attributes' => [
         'class' => [
-          'ajax_url',
+          'url_container',
         ],
       ],
     ];
@@ -100,12 +95,12 @@ class Fields extends FormBase {
    */
   public function textfieldsCallback($form, FormStateInterface $form_state) {
     if ($form_state->getValue('checkbox_1', NULL) === 1) {
-      $form['fields_container']['fields']['first_name'] = [
+      $form['fields_container']['first_name'] = [
         '#type' => 'textfield',
         '#title' => $this->t('First Name'),
         '#required' => TRUE,
       ];
-      $form['fields_container']['fields']['last_name'] = [
+      $form['fields_container']['last_name'] = [
         '#type' => 'textfield',
         '#title' => $this->t('Last Name'),
         '#required' => TRUE,
@@ -113,15 +108,6 @@ class Fields extends FormBase {
       $form['fields_container']['submit'] = [
         '#type' => 'submit',
         '#value' => $this->t('Submit'),
-      ];
-    }
-    else {
-      $form['fields_container'] = [
-        '#attributes' => [
-          'style' => [
-            'display:none;',
-          ],
-        ],
       ];
     }
     return $form['fields_container'];
@@ -132,7 +118,7 @@ class Fields extends FormBase {
    */
   public function urlfieldsCallback($form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
-    $selector = '.ajax_url';
+    $selector = '.url_container';
     if ($form_state->getValue('checkbox_2') === 1) {
       $render = '<a href="https://google.com/">go to google.com/</a>';
     }
