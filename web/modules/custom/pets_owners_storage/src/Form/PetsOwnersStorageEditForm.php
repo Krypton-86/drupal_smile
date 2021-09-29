@@ -39,16 +39,16 @@ class PetsOwnersStorageEditForm extends FormBase {
     $form_obj = new PetsOwnersForm();
     $form = $form_obj->getFormParamArray();
     if (!empty($record['0'])) {
-      $form['name']['#default_value'] = !empty($record[0]->name) ? $record[0]->name : "";
-      $form['gender']['#default_value'] = !empty($record[0]->gender) ? $record[0]->gender : "";
-      $form['prefix']['#default_value'] = !empty($record[0]->prefix) ? $record[0]->prefix : "";
-      $form['age']['#default_value'] = !empty($record[0]->age) ? $record[0]->age : "";
+      $form['name']['#default_value'] = !empty($record[0]->name) ? $record[0]->name : '';
+      $form['gender']['#default_value'] = !empty($record[0]->gender) ? $record[0]->gender : '';
+      $form['prefix']['#default_value'] = !empty($record[0]->prefix) ? $record[0]->prefix : '';
+      $form['age']['#default_value'] = !empty($record[0]->age) ? $record[0]->age : '';
       $form['parent']['#open'] = !empty($record[0]->mother_name)||!empty($record[0]->father_name);
-      $form['parent']['mother']['#default_value'] = !empty($record[0]->mother_name) ? $record[0]->mother_name : "";
-      $form['parent']['father']['#default_value'] = !empty($record[0]->father_name) ? $record[0]->father_name : "";
-      $form['have_pets']['#default_value'] = !empty($record[0]->have_pets) ? $record[0]->have_pets : "";
-      $form['pets']['#default_value'] = !empty($record[0]->pets_name) ? $record[0]->pets_name : "";
-      $form['email']['#default_value'] = !empty($record[0]->email) ? $record[0]->email : "";
+      $form['parent']['mother']['#default_value'] = !empty($record[0]->mother_name) ? $record[0]->mother_name : '';
+      $form['parent']['father']['#default_value'] = !empty($record[0]->father_name) ? $record[0]->father_name : '';
+      $form['have_pets']['#default_value'] = !empty($record[0]->have_pets) ? $record[0]->have_pets : '';
+      $form['pets']['#default_value'] = !empty($record[0]->pets_name) ? $record[0]->pets_name : '';
+      $form['email']['#default_value'] = !empty($record[0]->email) ? $record[0]->email : '';
       $form['actions']['submit'] = [
         '#type' => 'submit',
         '#value' => $this->t('Change'),

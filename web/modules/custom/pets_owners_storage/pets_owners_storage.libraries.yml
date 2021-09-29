@@ -1,4 +1,4 @@
-mymodule:
+pets_owners_storage:
   version: 1.x
   dependencies:
     - core/jquery #Just to be safe
