@@ -12,7 +12,7 @@ use Drupal\Core\Link;
 class PetsOwnersStorage {
 
   /**
-   * Implements access to all pets owners.
+   * Implements access to all pets owners list, delete, edit actions.
    */
   public function access() {
     $user = \Drupal::currentUser();
@@ -28,7 +28,7 @@ class PetsOwnersStorage {
    * Implements database info output.
    */
   public function getInfo($start = 0, $length = 10) {
-    $result  = \Drupal::database()
+    $result = \Drupal::database()
       ->select('pets_owners_storage', 'st')
       ->fields('st', [
         'id',
@@ -46,29 +46,33 @@ class PetsOwnersStorage {
       ->orderBy('id', 'DESC')
       ->execute()
       ->fetchAll();
-    $r       = 0;
-    $h       = 0;
-    $v       = 0;
-    $rows    = [];
-    $headers = [];
+
+    // Prepare headers for table.
+    $headers = [
+      'Record id', 'Name', 'Gender', 'Prefix', 'Age',
+      'Mother', 'Father', 'Have pets?',
+      'Pets name', 'Email', 'Action A', 'Action B',
+    ];
+
+    // Prepare rows for table, $r - row number, $i - item number in row.
+    $rows = [];
+    $r    = 0;
+    $i    = 0;
     foreach ($result as $array) {
-      foreach ($array as $key => $value) {
-        if ($h < 10) {
-          $headers[$h] = $key;
-          $h++;
-        }
-        elseif ($h == 10) {
-          $headers[$h] = "Action A";
-          $h++;
-          $headers[$h] = "Action B";
-        }
-        $rows[$r][$v] = $value;
-        $v++;
+      foreach ($array as $value) {
+        $rows[$r][$i] = $value;
+        $i++;
       }
-      $link = ['#markup' => "<a class='use-ajax' data-dialog-options='{&quot;width&quot;:200}' data-dialog-type='dialog' data-dialog-renderer='off_canvas' href='/pets_owners/confirm/" . $rows[$r][0] . "/delete'>Delete</a>"];
-      $rows[$r][$v] = \Drupal::service('renderer')->render($link);
-      $rows[$r][$v + 1] = Link::fromTextAndUrl('Edit', Url::fromUserInput("/pets_owners/edit/" . $rows[$r][0]));
-      $v = 0;
+      $link = [
+        '#markup' => "<a class='use-ajax'
+      data-dialog-options='{&quot;width&quot;:200}'
+      data-dialog-type='dialog'
+      data-dialog-renderer='off_canvas'
+      href='/pets_owners/confirm/" . $rows[$r][0] . "/delete'>Delete</a>",
+      ];
+      $rows[$r][$i] = \Drupal::service('renderer')->render($link);
+      $rows[$r][$i + 1] = Link::fromTextAndUrl('Edit', Url::fromUserInput("/pets_owners/edit/" . $rows[$r][0]));
+      $i = 0;
       $r++;
     }
     $content['table'] = [
@@ -81,7 +85,7 @@ class PetsOwnersStorage {
   }
 
   /**
-   * Implements deleting info from database.
+   * Implements deleting info by id from database.
    */
   public function deleteInfo($id) {
     $result = \Drupal::database()
