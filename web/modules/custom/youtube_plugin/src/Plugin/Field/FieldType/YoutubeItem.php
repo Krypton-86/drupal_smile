@@ -7,7 +7,7 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Plugin implementation of the Youtube field type.
+ * Plugin implementation of the YouTube field type.
  *
  * @FieldType(
  *   id = "youtube_plugin",
@@ -19,19 +19,20 @@ use Drupal\Core\TypedData\DataDefinition;
  * )
  */
 class YoutubeItem extends FieldItemBase {
+
   /**
    * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
-    return array(
-      'columns' => array(
-        'value' => array(
+    return [
+      'columns' => [
+        'value' => [
           'type' => 'text',
           'size' => 'tiny',
           'not null' => FALSE,
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
   }
 
   /**
