@@ -17,7 +17,7 @@ use Drupal\Core\Field\FieldItemListInterface;
  *   }
  * )
  */
-class YoutubeFormatter extends FormatterBase {
+class YoutubePictureFormatter extends FormatterBase {
 
   /**
    * {@inheritdoc}
