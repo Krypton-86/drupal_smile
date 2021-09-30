@@ -13,9 +13,9 @@ use Drupal\Core\TypedData\DataDefinition;
  *   id = "youtube_plugin",
  *   label = @Translation("Youtube video"),
  *   module = "youtube_plugin",
- *   description = @Translation("Output video from Youtube."),
+ *   description = @Translation("Display video from Youtube."),
  *   default_widget = "youtube_plugin",
- *   default_formatter = "youtube_plugin"
+ *   default_formatter = "youtube_player"
  * )
  */
 class YoutubeItem extends FieldItemBase {
