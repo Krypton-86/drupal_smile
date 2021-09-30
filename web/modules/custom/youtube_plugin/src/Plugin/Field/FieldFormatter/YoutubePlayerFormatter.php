@@ -29,11 +29,18 @@ class YoutubePlayerFormatter extends FormatterBase {
       preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $item->value, $matches);
 
       if (!empty($matches)) {
-        $content = '<img src="http://img.youtube.com/vi/' . $matches[0] . '/0.jpg">';
         $elements[$delta] = [
           '#type' => 'html_tag',
-          '#tag' => 'p',
-          '#value' => $content,
+          '#tag' => 'iframe',
+          '#attributes' => [
+            'id' => 'ytplayer',
+            'type' => 'text/html',
+            'width' => '800',
+            'height' => '430',
+            'frameborder' => '0',
+            'allowfullscreen' => '1',
+            'src' => "https://www.youtube.com/embed/$matches[0]",
+          ],
         ];
       }
 
