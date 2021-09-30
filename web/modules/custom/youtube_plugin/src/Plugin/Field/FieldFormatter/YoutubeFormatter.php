@@ -9,7 +9,7 @@ use Drupal\Core\Field\FieldItemListInterface;
  * Plugin implementation of the YouTube formatter.
  *
  * @FieldFormatter(
- *   id = "youtube_plugin",
+ *   id = "youtube_picture",
  *   module = "youtube_plugin",
  *   label = @Translation("Display clickbate picture for video"),
  *   field_types = {
