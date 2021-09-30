@@ -1,0 +1,5 @@
+name: Youtube plugin
+type: module
+description: Youtube embed field
+core: 8.x || 9.x
+package: Custom
