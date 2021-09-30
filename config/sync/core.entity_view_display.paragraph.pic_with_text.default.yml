@@ -1,0 +1,33 @@
+uuid: d40c6ec4-7194-4b3d-94d0-5c0c3f4522b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.pic_with_text.field_img
+    - field.field.paragraph.pic_with_text.field_text
+    - paragraphs.paragraphs_type.pic_with_text
+  module:
+    - image
+    - text
+id: paragraph.pic_with_text.default
+targetEntityType: paragraph
+bundle: pic_with_text
+mode: default
+content:
+  field_img:
+    weight: 1
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_text:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

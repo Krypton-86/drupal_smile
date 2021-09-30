@@ -1,0 +1,21 @@
+uuid: 72a064b0-81d9-4661-81ff-5bffe1079fe9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_youtube
+    - node.type.recipe
+  module:
+    - youtube_plugin
+id: node.recipe.field_youtube
+field_name: field_youtube
+entity_type: node
+bundle: recipe
+label: youtube
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: youtube_plugin
