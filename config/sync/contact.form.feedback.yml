@@ -1,4 +1,4 @@
-uuid: 7e302a44-5fc1-460f-a7b8-3d0c02166dd3
+uuid: d4ace91e-6885-4749-a68e-520b20605b2c
 langcode: en
 status: true
 dependencies: {  }
@@ -7,7 +7,7 @@ _core:
 id: feedback
 label: 'Website feedback'
 recipients:
-  - school-no-reply@mail.m
+  - mccolaichuk@gmail.com
 reply: ''
 weight: 0
 message: 'Your message has been sent.'
