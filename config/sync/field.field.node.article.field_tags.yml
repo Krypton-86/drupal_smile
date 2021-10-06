@@ -1,10 +1,11 @@
-uuid: 29331fe8-0c46-4398-90a2-cea4a2e1b940
+uuid: 7ed485a1-9b9d-4c4e-b8e0-19d315271da2
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_tags
     - node.type.article
+    - taxonomy.vocabulary.tags
 _core:
   default_config_hash: QdUgf_beeoaPiyKorFv0q1fcJpWH_uZTqe_xoVJacrw
 id: node.article.field_tags
@@ -20,7 +21,8 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles: {  }
+    target_bundles:
+      tags: tags
     sort:
       field: _none
     auto_create: true

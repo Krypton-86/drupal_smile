@@ -1,6 +1,4 @@
 module:
-  admin_toolbar: 0
-  admin_toolbar_tools: 0
   automated_cron: 0
   big_pipe: 0
   block: 0
@@ -14,12 +12,8 @@ module:
   contextual: 0
   datetime: 0
   dblog: 0
-  devel: 0
-  devel_generate: 0
   dynamic_page_cache: 0
   editor: 0
-  entity_reference_revisions: 0
-  examples: 0
   field: 0
   field_ui: 0
   file: 0
@@ -48,12 +42,10 @@ module:
   text: 0
   toolbar: 0
   tour: 0
-  update: 0
   user: 0
   views_ui: 0
   youtube_plugin: 0
   views: 10
-  paragraphs: 11
   standard: 1000
 theme:
   bartik: 0
