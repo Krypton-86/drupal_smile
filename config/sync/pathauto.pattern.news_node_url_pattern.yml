@@ -1,0 +1,22 @@
+uuid: 4f9f78af-08dc-438d-b0c7-58060b27bcaf
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: news_node_url_pattern
+label: 'News node URL pattern'
+type: 'canonical_entities:node'
+pattern: '/news/[node:field_main_category]/[node:title]'
+selection_criteria:
+  92cbafcc-2130-4e98-9d87-99d5e000c47e:
+    id: node_type
+    bundles:
+      news: news
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 92cbafcc-2130-4e98-9d87-99d5e000c47e
+selection_logic: and
+weight: -5
+relationships: {  }

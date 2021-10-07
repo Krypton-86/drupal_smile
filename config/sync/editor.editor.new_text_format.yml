@@ -1,0 +1,49 @@
+uuid: d94e6edd-3257-4c45-9781-ed88fecc1427
+langcode: en
+status: false
+dependencies:
+  config:
+    - filter.format.new_text_format
+  module:
+    - ckeditor
+format: new_text_format
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Bold
+            - Italic
+            - Superscript
+            - Subscript
+            - SpecialChar
+        -
+          name: Links
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+        -
+          name: Tools
+          items:
+            - Source
+  plugins:
+    language:
+      language_list: un
+    stylescombo:
+      styles: ''
+image_upload:
+  status: false
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null
