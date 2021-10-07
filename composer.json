@@ -12,6 +12,19 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+          "type": "package",
+          "package": {
+            "name": "woocommerce/flexslider",
+            "version": "2.7.2",
+            "type": "drupal-library",
+            "source": {
+              "url": "https://github.com/woocommerce/FlexSlider.git",
+              "type": "git",
+              "reference": "2.7.2"
+            }
+          }
         }
     ],
     "require": {
@@ -26,12 +39,16 @@
         "drupal/devel_entity_updates": "^3.0",
         "drupal/entity_reference_revisions": "^1.9",
         "drupal/examples": "^3.0",
+        "drupal/libraries": "^3.0@beta",
         "drupal/paragraphs": "^1.12",
         "drupal/pathauto": "^1.8",
         "drupal/redirect": "^1.6",
+        "drupal/slick": "^2.4",
+        "drupal/views_bulk_operations": "^4.0",
         "drupal/views_slideshow": "^4.8",
         "drush/drush": "^10.6",
-        "squizlabs/php_codesniffer": "^3.6.0"
+        "squizlabs/php_codesniffer": "^3.6.0",
+        "woocommerce/flexslider": "~2.0"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -45,7 +62,10 @@
         "drupal-scaffold": {
             "locations": {
                 "web-root": "web/"
-            }
+            },
+            "file-mapping": {
+                "[web-root]/sites/development.services.yml": false
+    }
         },
         "installer-paths": {
             "web/core": [
