@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - pets_owners_storage
+    - user
 id: pets_owners
 label: 'Pets owners'
 module: views
@@ -19,8 +20,9 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
@@ -563,7 +565,112 @@ display:
           empty_zero: false
           hide_alter_empty: true
           plugin_id: standard
-      filters: {  }
+        nothing:
+          id: nothing
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Delete
+          exclude: false
+          alter:
+            alter_text: true
+            text: '<a class=''use-ajax'' data-dialog-options=''{&quot;width&quot;:200}'' data-dialog-type=''dialog'' data-dialog-renderer=''off_canvas'' href=''/pets_owners/confirm/{{ id }}/delete''>Delete</a>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+          plugin_id: custom
+        nothing_1:
+          id: nothing_1
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Edit
+          exclude: false
+          alter:
+            alter_text: true
+            text: Edit
+            make_link: true
+            path: '/pets_owners/edit/{{ id }}'
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+          plugin_id: custom
+      filters:
+        prefix:
+          id: prefix
+          table: pets_owners_storage
+          field: prefix
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
       sorts: {  }
       title: 'Pets owners'
       header: {  }
@@ -577,6 +684,7 @@ display:
       contexts:
         - 'languages:language_interface'
         - url.query_args
+        - user.permissions
       tags: {  }
   page_1:
     display_plugin: page
@@ -586,9 +694,68 @@ display:
     display_options:
       display_extenders: {  }
       path: pets-owners/list
+      menu:
+        type: none
+        title: 'Pets owners'
+        description: ''
+        expanded: false
+        parent: ''
+        weight: 20
+        context: '0'
+        menu_name: main
+      enabled: true
+      filters:
+        prefix:
+          id: prefix
+          table: pets_owners_storage
+          field: prefix
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: All
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: Sex
+            description: ''
+            use_operator: false
+            operator: prefix_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: prefix
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: filter_pets_owners_prefix
+      defaults:
+        filters: false
+        filter_groups: false
+      filter_groups:
+        operator: AND
+        groups: {  }
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_interface'
+        - url
         - url.query_args
+        - user.permissions
       tags: {  }

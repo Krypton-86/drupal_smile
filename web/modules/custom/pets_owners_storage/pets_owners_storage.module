@@ -65,10 +65,10 @@ function pets_owners_storage_views_data(): array
       'id' => 'standard',
     ],
     'filter' => [
-      'title' => t('Prefix'),
-      'help' => t('Filter mr, ms, mrs.'),
+      'title' => t('Sex'),
+      'help' => t('Filter by mr, ms, mrs.'),
       'field' => 'prefix',
-      'id' => 'views_pets_prefix',
+      'id' => 'filter_pets_owners_prefix',
     ],
   ];
   $data['pets_owners_storage']['age'] = [

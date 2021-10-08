@@ -1,0 +1,3 @@
+administer pets_owners_storage:
+  title: 'Edit pets_owners_storage'
+  description: 'Access to change data pets_owners_storage'
