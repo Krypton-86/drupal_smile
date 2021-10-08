@@ -1,17 +1,17 @@
 display_extenders: {  }
 skip_cache: true
-sql_signature: false
+sql_signature: true
 ui:
   show:
     additional_queries: false
     advanced_column: true
-    default_display: false
+    default_display: true
     performance_statistics: false
     preview_information: true
     sql_query:
       enabled: true
       where: above
-    display_embed: false
+    display_embed: true
   always_live_preview: true
   exposed_filter_any_label: old_any
 field_rewrite_elements:

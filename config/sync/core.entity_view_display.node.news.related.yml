@@ -1,0 +1,38 @@
+uuid: 54feb3f8-28f9-4796-a47a-e344892020c5
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.related
+    - field.field.node.news.body
+    - field.field.node.news.field_main_category
+    - field.field.node.news.field_main_image
+    - field.field.node.news.field_slideshow_gallery
+    - image.style.main_image
+    - node.type.news
+  module:
+    - media
+    - user
+id: node.news.related
+targetEntityType: node
+bundle: news
+mode: related
+content:
+  field_main_image:
+    type: media_thumbnail
+    weight: 1
+    label: visually_hidden
+    settings:
+      image_style: main_image
+      image_link: content
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  body: true
+  field_main_category: true
+  field_slideshow_gallery: true

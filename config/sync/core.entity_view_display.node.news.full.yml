@@ -1,0 +1,150 @@
+uuid: fb05aef9-5494-493d-bc2e-bd9918d1538c
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.news.body
+    - field.field.node.news.field_main_category
+    - field.field.node.news.field_main_image
+    - field.field.node.news.field_slideshow_gallery
+    - image.style.thumbnail
+    - node.type.news
+    - responsive_image.styles.main_image
+  module:
+    - blazy
+    - slick
+    - text
+    - user
+id: node.news.full
+targetEntityType: node
+bundle: news
+mode: full
+content:
+  body:
+    label: visually_hidden
+    type: text_default
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_main_category:
+    weight: 4
+    label: visually_hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_main_image:
+    type: blazy_media
+    weight: 1
+    label: visually_hidden
+    settings:
+      image_style: ''
+      responsive_image_style: main_image
+      media_switch: ''
+      thumbnail_style: thumbnail
+      ratio: ''
+      view_mode: default
+      current_view_mode: full
+      background: false
+      caption:
+        title: '0'
+        alt: '0'
+      class: ''
+      id: ''
+      image: ''
+      link: ''
+      overlay: ''
+      title: ''
+      vanilla: false
+      icon: ''
+      layout: ''
+      cache: 0
+      skin: ''
+      fx: ''
+      style: ''
+      box_caption: ''
+      box_caption_custom: ''
+      box_media_style: ''
+      box_style: ''
+      _uri: ''
+      breakpoints: {  }
+      sizes: ''
+      grid_header: ''
+      grid: ''
+      grid_medium: ''
+      grid_small: ''
+    third_party_settings: {  }
+    region: content
+  field_slideshow_gallery:
+    type: slick_media
+    weight: 3
+    label: visually_hidden
+    settings:
+      style: ''
+      optionset: default
+      optionset_thumbnail: ''
+      skin: default
+      skin_thumbnail: ''
+      image_style: ''
+      responsive_image_style: ''
+      thumbnail_effect: ''
+      thumbnail_position: ''
+      media_switch: ''
+      thumbnail_style: ''
+      ratio: ''
+      view_mode: default
+      grid: ''
+      grid_medium: ''
+      grid_small: ''
+      visible_items: null
+      image: ''
+      title: ''
+      link: ''
+      layout: ''
+      class: ''
+      cache: 0
+      current_view_mode: default
+      vanilla: false
+      background: false
+      caption:
+        title: '0'
+        alt: '0'
+      preserve_keys: false
+      use_theme_field: false
+      override: false
+      overridables:
+        arrows: '0'
+        autoplay: '0'
+        dots: '0'
+        draggable: '0'
+        infinite: '0'
+        mouseWheel: '0'
+        randomize: '0'
+        variableWidth: '0'
+      thumbnail: ''
+      thumbnail_caption: ''
+      skin_arrows: ''
+      skin_dots: ''
+      fx: ''
+      icon: ''
+      box_caption: ''
+      box_caption_custom: ''
+      box_media_style: ''
+      box_style: ''
+      _uri: ''
+      breakpoints: {  }
+      sizes: ''
+      grid_header: ''
+      id: ''
+      overlay: ''
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }
