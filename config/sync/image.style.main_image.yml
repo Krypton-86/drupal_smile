@@ -1,0 +1,15 @@
+uuid: ce091f4c-99ad-4cf4-8554-53ad663c6664
+langcode: en
+status: true
+dependencies: {  }
+name: main_image
+label: 'Related Main Image 250x250'
+effects:
+  68bc5bc2-dd9b-484f-befb-e6ef8635f65b:
+    uuid: 68bc5bc2-dd9b-484f-befb-e6ef8635f65b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 250
+      height: 250
+      anchor: center-center

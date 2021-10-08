@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.related
     - core.entity_view_mode.node.teaser
     - node.type.news
     - system.menu.main
@@ -183,7 +184,7 @@ display:
   block_1:
     display_plugin: block
     id: block_1
-    display_title: Block
+    display_title: 'Related News Block'
     position: 2
     display_options:
       display_extenders: {  }
@@ -273,22 +274,28 @@ display:
         title: false
         pager: false
       style:
-        type: default
-        options: {  }
-      row:
-        type: fields
+        type: grid
         options:
-          default_field_elements: true
-          inline:
-            title: title
-          separator: ''
-          hide_empty: false
-      title: 'Recent news'
+          uses_fields: false
+          columns: 3
+          automatic_width: true
+          alignment: horizontal
+          col_class_default: true
+          col_class_custom: ''
+          row_class_default: true
+          row_class_custom: ''
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: related
+      title: 'Related news'
       pager:
         type: some
         options:
           items_per_page: 3
           offset: 0
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:

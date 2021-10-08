@@ -4,3 +4,148 @@ function pets_owners_storage_preprocess_node__page(array &$variables) : void {
   //Module name: 'pets_owners_storage', library name: 'pets_owners_storage'.
   $variables['#attached']['library'][] = 'pets_owners_storage/pets_owners_storage';
 }
+/**
+ * Implements hook_views_data().
+ */
+function pets_owners_storage_views_data(): array
+{
+  // Base data.
+  $data = [];
+  $data['pets_owners_storage'] = [];
+  $data['pets_owners_storage']['table'] = [];
+  $data['pets_owners_storage']['table']['group'] = t('Pets owners');
+  $data['pets_owners_storage']['table']['provider'] = 'pets_owners_storage';
+  $data['pets_owners_storage']['table']['base'] = [
+    'field' => 'id',
+    'title' => t('Pets owners'),
+    'help' => t('Pets owners table.'),
+  ];
+
+  $data['pets_owners_storage']['id'] = [
+    'title' => t('id'),
+    'help' => t('id'),
+    'field' => [
+      'id' => 'standard',
+    ],
+  ];
+
+  $data['pets_owners_storage']['name'] = [
+    'title' => t('name'),
+    'help' => t('user name'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+  ];
+  $data['pets_owners_storage']['gender'] = [
+    'title' => t('gender'),
+    'help' => t('user gender'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+  ];
+  $data['pets_owners_storage']['prefix'] = [
+    'title' => t('Prefix'),
+    'help' => t('mr, ms, mrs'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'title' => t('Prefix'),
+      'help' => t('Filter mr, ms, mrs.'),
+      'field' => 'prefix',
+      'id' => 'views_pets_prefix',
+    ],
+  ];
+  $data['pets_owners_storage']['age'] = [
+    'title' => t('age'),
+    'help' => t('user age'),
+    'field' => [
+      'id' => 'numeric',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+  ];
+  $data['pets_owners_storage']['mother_name'] = [
+    'title' => t('mother'),
+    'help' => t('mother`s name'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+  ];
+  $data['pets_owners_storage']['father_name'] = [
+    'title' => t('father'),
+    'help' => t('father`s name'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+  ];
+  $data['pets_owners_storage']['have_pets'] = [
+    'title' => t('Have pets'),
+    'help' => t('True if user have pets'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+  ];
+  $data['pets_owners_storage']['pets_name'] = [
+    'title' => t('pet name'),
+    'help' => t('pet name'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+  ];
+  $data['pets_owners_storage']['email'] = [
+    'title' => t('email'),
+    'help' => t('user email'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+  ];
+
+  return $data;
+}
