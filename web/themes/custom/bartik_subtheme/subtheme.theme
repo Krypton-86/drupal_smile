@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @param array $suggestions
+ * @param array $variables
+ * Implements hook_theme_suggestions_HOOK_alter.
+ */
+function subtheme_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  $template = $variables["elements"]["#node"]->get('field_template')->getString();
+if ($template == "faq" || "sitemap") {
+  $suggestions[] = "node__page__$template";
+}
+}

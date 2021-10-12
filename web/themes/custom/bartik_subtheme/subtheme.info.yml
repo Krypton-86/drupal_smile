@@ -1,14 +1,12 @@
-name: Bartik_subtheme
+name: Subtheme
 type: theme
 base theme: bartik
-description: 'subtheme'
+description: 'My version of the Bartik theme'
 package: Core
 core: 8.x
 core_version_requirement: ^8 || ^9
-
 libraries:
-  - bartik_subtheme/maintenance_page
-
+  - subtheme/maintenance_page
 regions:
   header: Header
   primary_menu: 'Primary menu'
