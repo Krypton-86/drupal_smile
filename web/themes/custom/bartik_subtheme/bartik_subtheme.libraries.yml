@@ -1,0 +1,5 @@
+maintenance_page:
+  css:
+    theme:
+      css/maintenance-page.css: {}
+

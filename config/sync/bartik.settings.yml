@@ -1,0 +1,10 @@
+features:
+  node_user_picture: true
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+logo:
+  use_default: true
+  path: 'public://hjptnrf.png'
+favicon:
+  use_default: true
