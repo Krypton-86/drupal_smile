@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.news.field_main_category
     - field.field.node.news.field_main_image
     - field.field.node.news.field_slideshow_gallery
+    - field.field.node.news.field_template
     - node.type.news
   module:
     - media_library
@@ -57,6 +58,12 @@ content:
       media_types: {  }
     third_party_settings: {  }
     region: content
+  field_template:
+    weight: 125
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   path:
     type: path
     weight: 30
@@ -102,4 +109,9 @@ content:
       match_limit: 10
     region: content
     third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
 hidden: {  }

@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.news.field_main_category
     - field.field.node.news.field_main_image
     - field.field.node.news.field_slideshow_gallery
+    - field.field.node.news.field_template
     - image.style.main_image
     - node.type.news
   module:
@@ -36,3 +37,4 @@ hidden:
   body: true
   field_main_category: true
   field_slideshow_gallery: true
+  field_template: true

@@ -25,6 +25,18 @@
               "reference": "2.7.2"
             }
           }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "components/JCF",
+                "version": "master",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/w3co/jcf/archive/refs/heads/master.zip",
+                    "type": "zip"
+                }
+            }
         }
     ],
     "require": {
