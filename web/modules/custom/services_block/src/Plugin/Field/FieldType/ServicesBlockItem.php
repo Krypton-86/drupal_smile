@@ -47,7 +47,7 @@ class ServicesBlockItem extends FieldItemBase {
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties['value'] = DataDefinition::create('string')
-      ->setLabel(t('Youtube video URL'));
+      ->setLabel(t('Service'));
 
     return $properties;
   }
