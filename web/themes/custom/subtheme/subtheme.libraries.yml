@@ -1,0 +1,13 @@
+maintenance_page:
+  css:
+    theme:
+      css/maintenance-page.css: {}
+jcf:
+  version: VERSION
+  js:
+    /libraries/jcf/js/jcf.js: { type: external}
+    /libraries/jcf/js/jcf.checkbox.js: { type: external}
+    /libraries/jcf/js/jcf.radio.js: { type: external}
+    /libraries/jcf/js/jcf.select.js: { type: external}
+  dependencies:
+    - core/jquery

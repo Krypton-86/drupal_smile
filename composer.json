@@ -14,23 +14,10 @@
             "url": "https://packages.drupal.org/8"
         },
         {
-          "type": "package",
-          "package": {
-            "name": "woocommerce/flexslider",
-            "version": "2.7.2",
-            "type": "drupal-library",
-            "source": {
-              "url": "https://github.com/woocommerce/FlexSlider.git",
-              "type": "git",
-              "reference": "2.7.2"
-            }
-          }
-        },
-        {
             "type": "package",
             "package": {
-                "name": "components/JCF",
-                "version": "master",
+                "name": "components/jcf",
+                "version": "1.2.3",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/w3co/jcf/archive/refs/heads/master.zip",
@@ -40,6 +27,7 @@
         }
     ],
     "require": {
+        "components/jcf": "^1.2",
         "composer/installers": "^1.9",
         "drupal/admin_toolbar": "^3.0",
         "drupal/adminimal_theme": "^1.6",
