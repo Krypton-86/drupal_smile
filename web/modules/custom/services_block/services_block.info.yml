@@ -1,0 +1,8 @@
+name: Services
+type: module
+description:  'display the last 3 created Services'
+core_version_requirement: ^8 || ^9
+package: Custom
+version: 1.0
+dependencies:
+  - drupal:block
