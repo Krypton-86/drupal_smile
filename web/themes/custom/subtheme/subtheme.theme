@@ -6,8 +6,11 @@
  * Implements hook_theme_suggestions_HOOK_alter.
  */
 function subtheme_theme_suggestions_node_alter(array &$suggestions, array $variables) {
-  $template = $variables["elements"]["#node"]->get('field_template')->getString();
-if ($template == "faq" || "sitemap") {
-  $suggestions[] = "node__page__$template";
-}
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $type = $node->bundle();
+    if ($type == 'news') {
+      $value = $node->get('field_template')->getString();
+      $suggestions[] = "node__page__$value";
+    }
+  }
 }
