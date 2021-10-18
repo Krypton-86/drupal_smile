@@ -1,0 +1,41 @@
+uuid: f8569eb3-67b5-483c-9d8d-262398540c1b
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - node
+    - services_block
+    - system
+  theme:
+    - bartik
+id: services
+theme: bartik
+region: header
+weight: -7
+provider: null
+plugin: service_block
+settings:
+  id: service_block
+  label: Services
+  provider: services_block
+  label_display: visible
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      service: service
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  node_type:
+    id: node_type
+    bundles:
+      service: service
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false

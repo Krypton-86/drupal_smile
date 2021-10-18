@@ -1,0 +1,10 @@
+uuid: c05ea315-18e1-45b7-9776-b952af9fbde7
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+id: block_content.services
+label: Services
+targetEntityType: block_content
+cache: true
