@@ -1,0 +1,5 @@
+table:
+  version: VERSION
+  css:
+    theme:
+      css/table.css: {}
