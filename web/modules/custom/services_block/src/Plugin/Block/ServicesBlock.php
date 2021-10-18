@@ -8,10 +8,8 @@ use Drupal\Core\Block\BlockBase;
  * Provides a 'Services' block.
  *
  * @Block(
- *   id = "service_block",
- *   admin_label = @Translation("Services"),
- *   category = @Translation("Services")
- * )
+ *   id = "services_block",
+ *   admin_label = @Translation("Services")
  */
 class ServicesBlock extends BlockBase {
 
@@ -20,7 +18,7 @@ class ServicesBlock extends BlockBase {
    */
   public function build() {
     $query = \Drupal::entityQuery('node');
-    $entity_ids = $query->condition('type', 'services', '=')
+    $entity_ids = $query->condition('type', 'servises', '=')
       ->range(0, 3)
       ->execute();
     $entity_type_manager = \Drupal::entityTypeManager();
@@ -28,7 +26,7 @@ class ServicesBlock extends BlockBase {
 
     foreach ($entity_ids as $id) {
       $node = $entity_type_manager->getStorage('node')->load($id);
-      $list['services'][$node->id()] = $node_view_builder->view($node, 'teaser');
+      $list['servises'][$node->id()] = $node_view_builder->view($node, 'teaser');
     }
 
     $d = 'd';
@@ -36,7 +34,20 @@ class ServicesBlock extends BlockBase {
     return [
       '#theme' => 'services_theme',
       '#list' => $list,
+      '#attached' => [
+        'library' => ['services_block/table'],
+      ],
     ];
+  }
+
+  /**
+   * Disable block cache.
+   *
+   * @return int
+   *   Cache age life time.
+   */
+  public function getCacheMaxAge() {
+    return 0;
   }
 
 }
