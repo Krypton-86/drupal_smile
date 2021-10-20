@@ -1,0 +1,22 @@
+# Define the 'local' links for the module
+
+client.settings_tab:
+  route_name: smile_test.client_settings
+  title: Settings
+  base_route: smile_test.client_settings
+
+client.view:
+  route_name: entity.smile_test_client.canonical
+  base_route: entity.smile_test_client.canonical
+  title: View
+
+client.page_edit:
+  route_name: entity.smile_test_client.edit_form
+  base_route: entity.smile_test_client.canonical
+  title: Edit
+
+client.delete_confirm:
+  route_name:  entity.smile_test_client.delete_form
+  base_route:  entity.smile_test_client.canonical
+  title: Delete
+  weight: 10

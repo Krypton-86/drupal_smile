@@ -1,0 +1,11 @@
+# Define the menu links for this module
+
+entity.smile_test_client.collection:
+  title: 'smile_test content entity'
+  route_name: entity.smile_test_client.collection
+  description: 'List clients'
+smile_test_client.admin.structure.settings:
+  title: 'smile_test settings'
+  description: 'Configure client entity'
+  route_name:  smile_test.client_settings
+  parent: system.admin_structure
