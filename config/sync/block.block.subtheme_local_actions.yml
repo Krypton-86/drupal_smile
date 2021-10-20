@@ -9,7 +9,7 @@ _core:
 id: subtheme_local_actions
 theme: subtheme
 region: content
-weight: -4
+weight: -3
 provider: null
 plugin: local_actions_block
 settings:

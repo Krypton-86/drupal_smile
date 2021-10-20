@@ -1,0 +1,22 @@
+uuid: 90343a7a-e6f8-430e-bb8f-365119d28440
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - romanian_theme
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: romanian_theme_help
+theme: romanian_theme
+region: content
+weight: -4
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

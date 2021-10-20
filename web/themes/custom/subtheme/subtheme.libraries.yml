@@ -1,13 +1,16 @@
-maintenance_page:
+global-styling:
+  version: VERSION
   css:
-    theme:
+    base:
       css/maintenance-page.css: {}
-jcf:
+#      /libraries/jcf/css/theme-minimal/jcf.css: {type: external}
+#      /libraries/jcf/css/demo.css: {type: external}
+
+
+global-scripts:
   version: VERSION
   js:
-    /libraries/jcf/js/jcf.js: { type: external}
-    /libraries/jcf/js/jcf.checkbox.js: { type: external}
-    /libraries/jcf/js/jcf.radio.js: { type: external}
-    /libraries/jcf/js/jcf.select.js: { type: external}
-  dependencies:
-    - core/jquery
+    /libraries/jcf/js/jcf.js: {type: external}
+    /libraries/jcf/js/jcf.radio.js: {type: external}
+    /libraries/jcf/js/jcf.checkbox.js: {type: external}
+    /libraries/jcf/js/jcf.select.js: {type: external}

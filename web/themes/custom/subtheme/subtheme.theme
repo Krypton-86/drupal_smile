@@ -1,16 +1,72 @@
 <?php
 
 /**
- * @param array $suggestions
- * @param array $variables
- * Implements hook_theme_suggestions_HOOK_alter.
+ * @file
+ * Functions to support theming in the subtheme.
  */
-function subtheme_theme_suggestions_node_alter(array &$suggestions, array $variables) {
-  if ($node = \Drupal::routeMatch()->getParameter('node')) {
-    $type = $node->bundle();
-    if ($type == 'news') {
-      $value = $node->get('field_template')->getString();
-      $suggestions[] = "node__page__$value";
-    }
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
+
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\File\FileSystemInterface;
+
+function subtheme_preprocess_maintenance_page(&$variables)
+{
+  if (($node = \Drupal::routeMatch()->getParameter('node')) && $node instanceof \Drupal\node\NodeInterface) {
+    $field_value = $node->get('field_template')->get(0)->getValue();
+    $dop = 'Hi it is a' . $field_value['value'];
+    $variables['elements']['#attributes']['template'] = $dop;
   }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function subtheme_theme_suggestions_node_alter(array &$suggestions, array $variables)
+{
+
+  if (($node = \Drupal::routeMatch()->getParameter('node')) && $node instanceof \Drupal\node\NodeInterface) {
+    $dop = $node->getType();
+    if ($dop == "news") {
+      $field_value = $node->get('field_template')->get(0)->getValue();
+      $category = $field_value['value'];
+      $suggestions[] = 'node__page__' . $category;
+    }
+    if ($dop == 'service') {
+      $suggestions[] = 'node';
+    }
+
+  }
+
+}
+
+function subtheme_theme_suggestions_field_alter(array &$suggestions, array $variables)
+{
+  if (($node = \Drupal::routeMatch()->getParameter('node')) && $node instanceof \Drupal\node\NodeInterface) {
+    $dop = $node->getType();
+
+    if ($dop == "service") {
+      $suggestions[] = 'node--services--teaser';
+
+    }
+
+  }
+}
+
+function subtheme_preprocess_block(&$variables)
+{
+  $block = $variables['elements'];
+  if ($block['#plugin_id'] == 'services_block') {
+    $variables['title_attributes']['class'][] = 'blk';
+  }
+}
+
+function subtheme_theme_suggestions_block_alter(array &$suggestions, array $variables)
+{
+  $block = $variables['elements'];
+  if ($block['#plugin_id'] == 'services_block') {
+    $suggestions[] = 'node--services--teaser';
+  }
+
 }

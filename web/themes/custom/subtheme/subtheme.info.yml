@@ -1,13 +1,12 @@
 name: Subtheme
 type: theme
-base theme: bartik
 description: 'My version of the Bartik theme'
-package: Core
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8.8 || ^9
+base theme: bartik
 libraries:
-  - subtheme/maintenance_page
-  - subtheme/jcf
+  - subtheme/global-styling
+  - subtheme/global-scripts
+
 regions:
   header: Header
   primary_menu: 'Primary menu'
@@ -28,6 +27,7 @@ regions:
   footer_third: 'Footer third'
   footer_fourth: 'Footer fourth'
   footer_fifth: 'Footer fifth'
+
 libraries-override:
   bartik/maintenance_page:
     css:

@@ -11,7 +11,7 @@ _core:
 id: subtheme_help
 theme: subtheme
 region: content
-weight: -5
+weight: -4
 provider: null
 plugin: help_block
 settings:

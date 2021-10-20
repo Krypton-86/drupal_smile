@@ -1,0 +1,25 @@
+uuid: ac15da81-be11-4eca-af3a-cd84d2a705e4
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - romanian_theme
+_core:
+  default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
+id: romanian_theme_branding
+theme: romanian_theme
+region: header
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Bartik branding'
+  provider: system
+  label_display: visible
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }
