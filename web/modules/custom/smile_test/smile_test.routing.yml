@@ -1,67 +1,47 @@
-# This file brings everything together. Very nifty!
-
-# Route name can be used in several places; e.g. links, redirects, and local
-# actions.
-entity.smile_test_client.canonical:
-  path: '/smile_test_client/{smile_test_client}'
+entity.smile_test.canonical:
+  path: '/smile_test/{smile_test}'
   defaults:
-    # Calls the view controller, defined in the annotation of the Client
-    # entity. This marks this route as belonging to this entity type.
-    _entity_view: 'smile_test_client'
-    _title: 'client content'
+    _entity_view: 'smile_test'
+    _title: 'Client content'
   requirements:
-    # Calls the access controller of the entity, passing in the suffix ('view')
-    # as the $operation parameter to checkAccess().
-    _entity_access: 'smile_test_client.view'
+    _entity_access: 'smile_test.view'
 
-entity.smile_test_client.collection:
-  path: '/smile_test_client/list'
+entity.smile_test.collection:
+  path: '/smile_test/list'
   defaults:
-  # Calls the list controller, defined in the annotation of the Client entity.
-    _entity_list: 'smile_test_client'
-    _title: 'client list'
+    _entity_list: 'smile_test'
+    _title: 'Client list'
   requirements:
-  # Checks for permission directly.
     _permission: 'view client entity'
 
 smile_test.client_add:
-  path: '/smile_test_client/add'
+  path: '/smile_test/add'
   defaults:
-    # Calls the form.add controller, defined in the Client entity.
-    _entity_form: smile_test_client.default
+    _entity_form: smile_test.default
     _title: 'Add client'
   requirements:
-    # Use the entity's access controller. _entity_create_access tells the router
-    # to use the access controller's checkCreateAccess() method instead of
-    # checkAccess().
-    _entity_create_access: 'smile_test_client'
+    _entity_create_access: 'smile_test'
 
-entity.smile_test_client.edit_form:
-  path: '/smile_test_client/{smile_test_client}/edit'
+entity.smile_test.edit_form:
+  path: '/smile_test/{smile_test}/edit'
   defaults:
-  # Calls the form.edit controller, defined in the Client entity.
-    _entity_form: smile_test_client.default
-    _title: 'Edit client'
+    _entity_form: smile_test.default
+    _title: 'Edit contact'
   requirements:
-    # Calls the access controller of the entity, passing in the suffix
-    # ('update') as the $operation parameter to checkAccess().
-    _entity_access: 'smile_test_client.update'
+    _entity_access: 'smile_test.update'
 
-entity.smile_test_client.delete_form:
-  path: '/client/{smile_test_client}/delete'
+entity.smile_test.delete_form:
+  path: '/client/{smile_test}/delete'
   defaults:
-    # Calls the form.delete controller, defined in the Client entity.
-    _entity_form: smile_test_client.delete
+    _entity_form: smile_test.delete
     _title: 'Delete client'
   requirements:
-    # Calls the access controller of the entity, passing in the suffix
-    # ('delete') as the $operation parameter to checkAccess().
-    _entity_access: 'smile_test_client.delete'
+    _entity_access: 'smile_test.delete'
 
-smile_test.client_settings:
-  path: '/admin/structure/smile_test_client_settings'
+smile_test.smile_test_settings:
+  path: '/admin/structure/smile_test_settings'
   defaults:
-    _form: '\Drupal\smile_test\Form\ClientSettingsForm'
-    _title: 'client settings'
+    _form: '\Drupal\smile_test\Form\SmileTestSettingsForm'
+    _title: 'Client settings'
   requirements:
     _permission: 'administer client entity'

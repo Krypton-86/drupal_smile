@@ -6,7 +6,7 @@
  */
 
 /**
- * @defgroup smile_test Example: Content Entity
+
  * @ingroup examples
  * @{
  * Implement a content entity.
@@ -19,16 +19,16 @@
  *
  * This example implements the Entity API so that we have an entity type usable
  * by the user which you might think of as specialized nodes, but which are
- * different from nodes. These entities are called Client, and are known
- * internally by the machine name smile_test_client.
+ * different from nodes. These entities are called Contact, and are known
+ * internally by the machine name content_entity_example_contact.
  *
- * Client is a fieldable content entity used to hold structured information
+ * Contact is a fieldable content entity used to hold structured information
  * without the overhead of using a node content type. 'Fieldable' means you can
  * attach fields to it, like you can with nodes. It is defined programmatically
  * (completely in code). We will show the main techniques to handle and expose
  * the contents of this entity type.
  *
- * The Client entity will demonstrate the main tasks for an entity:
+ * The Contact entity will demonstrate the main tasks for an entity:
  * - define
  * - save
  * - load
@@ -39,7 +39,7 @@
  *
  * Where ever possible, we use the amazing tools built into D8 natively.
  *
- * @see Drupal\smile_test\Entity\Client
- * @see config_entity_example
+ * @see Drupal\smile_test\Entity\SmileTest
+ * @see smile_test
  * }
  */
