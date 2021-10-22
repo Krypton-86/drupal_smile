@@ -11,7 +11,7 @@ function smile_test_update_9002(&$sandbox){
     [
       'uuid' => uniqid(),
       'client_name' => 'Jake',
-      'prefered_brand' => 'Daimler',
+      'prefered_brand' => 'Apple',
       'products_owned_count' => 5,
       'registration_date' => time()+(60*60*24*1),
       'langcode' => 'und',
@@ -21,7 +21,7 @@ function smile_test_update_9002(&$sandbox){
     [
       'uuid' => uniqid(),
       'client_name' => 'Jack',
-      'prefered_brand' => 'VAG',
+      'prefered_brand' => 'Lenovo',
       'products_owned_count' => 4,
       'registration_date' => time()+(60*60*24*2),
       'langcode' => 'und',
@@ -31,7 +31,7 @@ function smile_test_update_9002(&$sandbox){
     [
       'uuid' => uniqid(),
       'client_name' => 'Lera',
-      'prefered_brand' => 'Tesla',
+      'prefered_brand' => 'Asus',
       'products_owned_count' => 7,
       'registration_date' => time()+(60*60*24*3),
       'langcode' => 'und',
@@ -41,7 +41,7 @@ function smile_test_update_9002(&$sandbox){
     [
       'uuid' => uniqid(),
       'client_name' => 'Antony',
-      'prefered_brand' => 'Daimler',
+      'prefered_brand' => 'HP',
       'products_owned_count' => 1,
       'registration_date' => time()+(60*60*24*4),
       'langcode' => 'und',
@@ -51,7 +51,7 @@ function smile_test_update_9002(&$sandbox){
     [
       'uuid' => uniqid(),
       'client_name' => 'Liza',
-      'prefered_brand' => 'BMW',
+      'prefered_brand' => 'HP',
       'products_owned_count' => 2,
       'registration_date' => time()+(60*60*24*5),
       'langcode' => 'und',
