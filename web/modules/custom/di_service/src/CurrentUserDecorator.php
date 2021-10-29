@@ -6,6 +6,9 @@ use Drupal\Core\Session\AccountProxy;
 use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
+/**
+ *
+ */
 class CurrentUserDecorator extends AccountProxy {
 
   /**
@@ -26,11 +29,13 @@ class CurrentUserDecorator extends AccountProxy {
 
   /**
    * Override.
+   *
    * @return string
    */
-  public function getDisplayName(){
+  public function getDisplayName() {
 
-  $email = $this->getAccount()->getEmail();
+    $email = $this->getAccount()->getEmail();
     return "Email: $email";
   }
+
 }

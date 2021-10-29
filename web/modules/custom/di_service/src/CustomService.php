@@ -10,7 +10,6 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 
-
 /**
  * Implement custom service.
  */
@@ -22,8 +21,13 @@ class CustomService {
   protected $currentUser;
   protected $entityTypeManager;
 
-  public function __construct(Connection $connection, TranslationInterface $translation,
-                              AccountInterface $currentUser,EntityTypeManagerInterface $entityTypeManager,
+  /**
+   *
+   */
+  public function __construct(Connection $connection,
+  TranslationInterface $translation,
+                              AccountInterface $currentUser,
+  EntityTypeManagerInterface $entityTypeManager,
                               MessengerInterface $messenger) {
     $this->connection = $connection;
     $this->setStringTranslation($translation);
@@ -32,11 +36,14 @@ class CustomService {
     $this->setMessenger($messenger);
   }
 
+  /**
+   *
+   */
   public function getAmountOfAllActive() {
     try {
       $result = $this->connection->select('users_field_data', 'us')
-        ->condition('status','1','=')
-        ->fields('us',['status'])
+        ->condition('status', '1', '=')
+        ->fields('us', ['status'])
         ->execute();
       $record = $result->fetchAll();
       $row = count($record);
@@ -49,46 +56,59 @@ class CustomService {
       ]), 'error');
     }
 
-
   }
 
+  /**
+   *
+   */
   public function getCurrentUserPosition() {
     $result = $this->connection->select('users_field_data', 'us')
-      ->condition('status','1','=')
-      ->fields('us',['uid','created'])
+      ->condition('status', '1', '=')
+      ->fields('us', ['uid', 'created'])
       ->orderBy('created', 'ASC')
       ->execute();
     $record = $result->fetchAll();
     $count = 0;
-    foreach ($record as $row){
+    foreach ($record as $row) {
       $id = $row->uid;
       $id2 = $this->getData();
       $count++;
-      if($id == $id2){
+      if ($id == $id2) {
         break;
       }
     };
     $str = "Your position of registration $count ";
     return $this->t($str);
   }
-  public function getNode(){
+
+  /**
+   *
+   */
+  public function getNode() {
     $nodes = $this->entityTypeManager->getStorage('node')
       ->loadMultiple();
-    $id_node = array_rand($nodes,1);
+    $id_node = array_rand($nodes, 1);
     $node = $this->entityTypeManager->getStorage('node')->load($id_node);
-    $result = $this->entityTypeManager->getViewBuilder('node')->view($node,'teaser');
+    $result = $this->entityTypeManager->getViewBuilder('node')->view($node, 'teaser');
     return $result;
   }
+
+  /**
+   *
+   */
   public function getData() {
     return $this->currentUser->id();
   }
-  public function getUserData() {
-    $date = date('F j, Y, G:i:s',$this->currentUser->getLastAccessedTime());
-    return [
-      'date' => 'Last visit: '.$date,
-      'name' => 'Login: '.$this->currentUser->getAccountName(),
-      ];
-  }
 
+  /**
+   *
+   */
+  public function getUserData() {
+    $date = date('F j, Y, G:i:s', $this->currentUser->getLastAccessedTime());
+    return [
+      'date' => 'Last visit: ' . $date,
+      'name' => 'Login: ' . $this->currentUser->getAccountName(),
+    ];
+  }
 
 }
