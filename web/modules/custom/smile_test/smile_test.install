@@ -76,53 +76,53 @@ function smile_test_update_9001(&$sandbox){
   }
 }
 
-///**
-// * implement update hook #2.
-// */
-//function smile_test_update_9002(){
-//  $connection = \Drupal::service('database');
-//  $delta = time()+(60*60*24*2);
-//  $result = $connection->update('smile_test')
-//    ->fields([
-//      'registration_date' => time(),
-//    ])
-//    ->condition('registration_date',$delta,'>')
-//    ->execute();
-//}
-//
-/////**
-//// * implement update hook #3.
-//// */
-////
-////function smile_test_update_9003(&$sandbox){
-////  $delta = time()+(60*60*24*1);
-////  if (!isset($sandbox['total'])) {
-////    $nids = \Drupal::entityQuery('smile_test')
-////      ->condition('registration_date',$delta,'>')
-////      ->execute();
-////    $sandbox['total'] = count($nids);
-////    $sandbox['current'] = 0;
-////  }
-////
-////  $nodes_per_batch = 1;
-////
-////  $nids = \Drupal::entityQuery('smile_test')
-////    ->condition('registration_date',$delta,'>')
-////    ->range($sandbox['current'], $sandbox['current'] + $nodes_per_batch)
-////    ->execute();
-////
-////  foreach($nids as $nid) {
-////    $node = SmileTest::load($nid);
-////    $node->registration_date->value = time();
-////    $node->save();
-////    $sandbox['current']++;
-////  }
-////
-////  if ($sandbox['total'] == 0) {
-////    $sandbox['#finished'] = 1;
-////  } else {
-////    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
-////  }
-////}
+/**
+ * implement update hook #2.
+ */
+function smile_test_update_9002(){
+  $connection = \Drupal::service('database');
+  $delta = time()+(60*60*24*1);
+  $result = $connection->update('smile_test')
+    ->fields([
+      'registration_date' => time(),
+    ])
+    ->condition('registration_date',$delta,'>')
+    ->execute();
+}
+
+/**
+ * implement update hook #3.
+ */
+
+function smile_test_update_9003(&$sandbox){
+  $delta = time()+(60*60*24*1);
+  if (!isset($sandbox['total'])) {
+    $nids = \Drupal::entityQuery('smile_test')
+      ->condition('registration_date',$delta,'>')
+      ->execute();
+    $sandbox['total'] = count($nids);
+    $sandbox['current'] = 0;
+  }
+
+  $nodes_per_batch = 1;
+
+  $nids = \Drupal::entityQuery('smile_test')
+    ->condition('registration_date',$delta,'>')
+    ->range($sandbox['current'], $sandbox['current'] + $nodes_per_batch)
+    ->execute();
+
+  foreach($nids as $nid) {
+    $node = SmileTest::load($nid);
+    $node->registration_date->value = time();
+    $node->save();
+    $sandbox['current']++;
+  }
+
+  if ($sandbox['total'] == 0) {
+    $sandbox['#finished'] = 1;
+  } else {
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  }
+}
 
 
