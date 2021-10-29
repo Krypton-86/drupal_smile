@@ -22,13 +22,15 @@ class CustomService {
   protected $entityTypeManager;
 
   /**
-   *
+   * Implements dependency injection.
    */
-  public function __construct(Connection $connection,
+  public function __construct(
+    Connection $connection,
   TranslationInterface $translation,
-                              AccountInterface $currentUser,
+  AccountInterface $currentUser,
   EntityTypeManagerInterface $entityTypeManager,
-                              MessengerInterface $messenger) {
+  MessengerInterface $messenger) {
+
     $this->connection = $connection;
     $this->setStringTranslation($translation);
     $this->currentUser = $currentUser;
@@ -37,7 +39,9 @@ class CustomService {
   }
 
   /**
+   * Get`s amount of all active users.
    *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
    */
   public function getAmountOfAllActive() {
     try {
@@ -47,8 +51,7 @@ class CustomService {
         ->execute();
       $record = $result->fetchAll();
       $row = count($record);
-      $str = "You are unique among $row users";
-      return $this->t($str);
+      return $this->t('You are unique among @count users', ['@count' => $row]);
     }
     catch (\Exception $e) {
       $this->messenger()->addMessage($this->t('Select failed. Message = %message', [
@@ -59,7 +62,9 @@ class CustomService {
   }
 
   /**
+   * Get`s current user position in users table.
    *
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
    */
   public function getCurrentUserPosition() {
     $result = $this->connection->select('users_field_data', 'us')
@@ -77,12 +82,11 @@ class CustomService {
         break;
       }
     };
-    $str = "Your position of registration $count ";
-    return $this->t($str);
+    return $this->t('Your position of registration @number ', ['@number' => $count]);
   }
 
   /**
-   *
+   * Get`s node render.
    */
   public function getNode() {
     $nodes = $this->entityTypeManager->getStorage('node')
@@ -94,20 +98,20 @@ class CustomService {
   }
 
   /**
-   *
+   * Get`s user id.
    */
   public function getData() {
     return $this->currentUser->id();
   }
 
   /**
-   *
+   * Get`s user data (last visit, username).
    */
   public function getUserData() {
     $date = date('F j, Y, G:i:s', $this->currentUser->getLastAccessedTime());
     return [
-      'date' => 'Last visit: ' . $date,
-      'name' => 'Login: ' . $this->currentUser->getAccountName(),
+      'date' => $this->t('Last visit: @date', ['@date' => $date]),
+      'name' => $this->t('Login: @username', ['@username' => $this->currentUser->getAccountName()]),
     ];
   }
 
