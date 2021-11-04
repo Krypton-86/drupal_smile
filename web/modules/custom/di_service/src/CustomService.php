@@ -24,12 +24,7 @@ class CustomService {
   /**
    * Implements dependency injection.
    */
-  public function __construct(
-    Connection $connection,
-  TranslationInterface $translation,
-  AccountInterface $currentUser,
-  EntityTypeManagerInterface $entityTypeManager,
-  MessengerInterface $messenger) {
+  public function __construct(Connection $connection, TranslationInterface $translation, AccountInterface $currentUser, EntityTypeManagerInterface $entityTypeManager, MessengerInterface $messenger) {
 
     $this->connection = $connection;
     $this->setStringTranslation($translation);
@@ -50,8 +45,8 @@ class CustomService {
         ->fields('us', ['status'])
         ->execute();
       $record = $result->fetchAll();
-      $row = count($record);
-      return $this->t('You are unique among @count users', ['@count' => $row]);
+      $count = count($record);
+      return $this->t('You are unique among @count users', ['@count' => $count]);
     }
     catch (\Exception $e) {
       $this->messenger()->addMessage($this->t('Select failed. Message = %message', [
@@ -74,8 +69,8 @@ class CustomService {
       ->execute();
     $record = $result->fetchAll();
     $count = 0;
-    foreach ($record as $row) {
-      $id = $row->uid;
+    foreach ($record as $rec) {
+      $id = $rec->uid;
       $id2 = $this->getData();
       $count++;
       if ($id == $id2) {
@@ -93,8 +88,7 @@ class CustomService {
       ->loadMultiple();
     $id_node = array_rand($nodes, 1);
     $node = $this->entityTypeManager->getStorage('node')->load($id_node);
-    $result = $this->entityTypeManager->getViewBuilder('node')->view($node, 'teaser');
-    return $result;
+    return $this->entityTypeManager->getViewBuilder('node')->view($node, 'teaser');
   }
 
   /**
