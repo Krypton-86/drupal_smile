@@ -41,7 +41,7 @@ class DiBlock extends BlockBase implements ContainerFactoryPluginInterface {
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function build() {
     $currentUser = $this->currentUser->getDisplayName();
@@ -57,7 +57,6 @@ class DiBlock extends BlockBase implements ContainerFactoryPluginInterface {
     $list['info']['number_of_user'] = $number_of_user;
     $list['info']['content'] = $content;
     $list['info']['node'] = $node;
-    $dop = $node['#cache']['tags'][0];
     return [
       '#theme'    => 'di_block_theme',
       '#list'     => $list,
@@ -65,21 +64,11 @@ class DiBlock extends BlockBase implements ContainerFactoryPluginInterface {
         'library' => ['di_block/style'],
       ],
       '#cache' => [
-        'tags' => ['node_list'],
+        'tags' => $node['#node']->getCacheTags(),
         'max-age' => -1,
         'contexts' => ['user.roles:authenticated'],
       ],
     ];
-
   }
 
-  /**
-  * Disable block cache.
-  *
-  * @return integer
-  *   Cache age life time.
-  */
-  // Public function getCacheMaxAge(){
-  //    return 0;
-  //  }//end getCacheMaxAge()
 }

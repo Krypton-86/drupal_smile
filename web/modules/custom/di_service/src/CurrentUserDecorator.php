@@ -7,20 +7,14 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- *
+ * Decorates CurrentUser.
  */
 class CurrentUserDecorator extends AccountProxy {
 
-  /**
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $originalService;
+  protected AccountProxyInterface $originalService;
 
   /**
    * AccountProxy constructor.
-   *
-   * @param \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher
-   *   Event dispatcher.
    */
   public function __construct(AccountProxyInterface $current_user, EventDispatcherInterface $eventDispatcher) {
     $this->originalService = $current_user;
@@ -28,7 +22,7 @@ class CurrentUserDecorator extends AccountProxy {
   }
 
   /**
-   * Override.
+   * Override Email.
    *
    * @return string
    */
