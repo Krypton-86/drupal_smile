@@ -1,0 +1,34 @@
+<?php
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function cron_batch_node_insert(NodeInterface $node) {
+  $data = [
+    'title' => $node->label(),
+    'id' => $node->id(),
+  ];
+  $queue = \Drupal::queue('db_logger');
+  $queue->createQueue();
+  $queue->createItem($data);
+}
+
+
+/**
+ * Implements hook_cron().
+ */
+function cron_batch_cron() {
+  $queue = \Drupal::queue('unpublish_node_queue');
+  $queue->createQueue();
+  $nids = Drupal::entityQuery('node')
+    ->condition('status', TRUE)
+    ->sort('changed', 'ASC')
+    ->range(0, 15)
+    ->execute();
+  foreach ($nids as $nid) {
+    $queue->createItem($nid);
+  }
+}
+
