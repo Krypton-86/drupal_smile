@@ -1,19 +1,17 @@
 <?php
 
-namespace Drupal\pets_owners_REST\Plugin\rest\resource;
+namespace Drupal\pets_owners_rest\Plugin\rest\resource;
 
 use Drupal\Core\Database\Database;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
-use Drupal\ultimate_cron\Logger\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @RestResource(
  *   id = "pets_owners_list_resource",
- *   label = @Translation("Rest list of pets owners"),
+ *   label = @Translation("Pets owners list"),
  *   uri_paths = {
  *     "canonical" = "/api/pets_owners",
  *   }
@@ -28,34 +26,7 @@ class PetsOwnersListResource extends ResourceBase {
    */
   protected AccountProxyInterface $currentUser;
 
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(
-    array $configuration,
-          $plugin_id,
-          $plugin_definition,
-    array $serializer_formats,
-    LoggerInterface $logger,
-    AccountProxyInterface $current_user) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
-    $this->currentUser = $current_user;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->getParameter('serializer.formats'),
-      $container->get('logger.factory')->get('pets_owners_REST'),
-      $container->get('current_user')
-    );
-  }
 
   /**
    * @return \Drupal\rest\ResourceResponse
