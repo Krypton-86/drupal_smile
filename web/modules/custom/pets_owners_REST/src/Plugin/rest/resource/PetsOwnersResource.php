@@ -42,5 +42,41 @@ class PetsOwnersResource extends ResourceBase {
     }
     throw new BadRequestHttpException(t('No entry PID was provided'));
   }
+  /**
+   * Responds to POST requests.
+   *
+   * @return ResourceResponse
+   */
+  public function post($pid, $data) {
+    // Array of fields from DB.
+    $fields = [
+      'prefix' => 'prefix',
+      'name' => 'name',
+      'gender' => 'gender',
+      'age' => 'age',
+      'father' => 'father',
+      'mother' => 'mother',
+      'pets_name' => 'pets_mame',
+      'email' => 'email',
+    ];
+    $value = array_intersect_key($data, $fields);
+    if ($pid > 0 && !empty($value)) {
+      try {
+        $query = \Drupal::database();
+        $update = $query->update('pets_owners_storage')
+          ->fields($value)
+          ->condition('pid', $pid)
+          ->execute();
+        if ($update == TRUE) {
+          return new ResourceResponse('Record was updated in DB');
+        }
+      }
+      catch (\Exception $e) {
+        throw new HttpException(500, 'Internal Server Error', $e);
+      }
+      throw new NotFoundHttpException(t('Pets owner with PID :pid was not found', [':pid' => $pid]));
+    }
+    throw new BadRequestHttpException(t('No entry PID or query parameters was provided'));
+  }
 
 }
