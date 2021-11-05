@@ -31,5 +31,5 @@ http://drupal.docker.localhost/api/pets_owners/?id=1
 ```
 ### Load full list of records with pagination possibility and filtering option by age:
 ```
-http://drupal.docker.localhost/api/pets_owners/list?page=1&limit=3&age=15
+http://drupal.docker.localhost/api/pets_owners/list?page=1&limit=3&age=18
 ```
