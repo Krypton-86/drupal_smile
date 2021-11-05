@@ -3,12 +3,15 @@
 namespace Drupal\pets_owners_REST\Plugin\rest\resource;
 
 use Drupal\Core\Database\Database;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Drupal\ultimate_cron\Logger\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @RestResource(
@@ -23,16 +26,52 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PetsOwnersResource extends ResourceBase {
 
   /**
-   * Responds to GET requests.
+   * A current user instance.
    *
-   * @return ResourceResponse
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(
+    array $configuration,
+          $plugin_id,
+          $plugin_definition,
+    array $serializer_formats,
+    LoggerInterface $logger,
+    AccountProxyInterface $current_user) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
+
+    $this->currentUser = $current_user;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->getParameter('serializer.formats'),
+      $container->get('logger.factory')->get('pets_owners_REST'),
+      $container->get('current_user')
+    );
+  }
+
+  /**
+   * Implements GET requests with parameter pid.
+   *
+   * @return \Drupal\rest\ResourceResponse
    */
   public function get($pid = NULL) {
     if ($pid > 0) {
       $query = Database::getConnection()
-        ->select('pets_owners_storage', 'p')
-        ->condition('p.pid', $pid)
-        ->fields('p')
+        ->select('pets_owners_storage', 's')
+        ->condition('s.pid', $pid)
+        ->fields('s')
         ->execute()
         ->fetchAssoc();
       if (!empty($query)) {
@@ -42,10 +81,11 @@ class PetsOwnersResource extends ResourceBase {
     }
     throw new BadRequestHttpException(t('No entry PID was provided'));
   }
+
   /**
-   * Responds to POST requests.
+   * Implements POST requests.
    *
-   * @return ResourceResponse
+   * @return \Drupal\rest\ResourceResponse
    */
   public function post($pid, $data) {
     // Array of fields from DB.
@@ -80,9 +120,9 @@ class PetsOwnersResource extends ResourceBase {
   }
 
   /**
-   * Responds to DELETE requests.
+   * Implements DELETE requests.
    *
-   * @return ResourceResponse
+   * @return \Drupal\rest\ResourceResponse
    */
   public function delete($pid): ModifiedResourceResponse|ResourceResponse {
     if ($pid > 0) {
@@ -104,4 +144,5 @@ class PetsOwnersResource extends ResourceBase {
     }
     return new ModifiedResourceResponse(NULL, 400);
   }
+
 }
