@@ -1,0 +1,8 @@
+name: 'Pets owners REST API'
+type: module
+description: 'Custom module for using Pets owners REST API'
+core_version_requirement: ^9
+package: 'Custom'
+
+dependencies:
+  - pets_owners_storage
