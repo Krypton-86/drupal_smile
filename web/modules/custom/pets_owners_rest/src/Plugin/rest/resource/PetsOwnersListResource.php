@@ -2,7 +2,6 @@
 
 namespace Drupal\pets_owners_rest\Plugin\rest\resource;
 
-use Drupal\Core\Database\Database;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
@@ -46,6 +45,7 @@ class PetsOwnersListResource extends ResourceBase {
     $result = $result->range(($page - 1) * $limit, $limit)
       ->execute()->fetchAllAssoc('id');
     // Object to array.
+    // Add 'page n of N'
     foreach ($result as $item) {
       $list[$item->id] = (array) $item;
     }
