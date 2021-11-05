@@ -79,4 +79,29 @@ class PetsOwnersResource extends ResourceBase {
     throw new BadRequestHttpException(t('No entry PID or query parameters was provided'));
   }
 
+  /**
+   * Responds to DELETE requests.
+   *
+   * @return ResourceResponse
+   */
+  public function delete($pid): ModifiedResourceResponse|ResourceResponse {
+    if ($pid > 0) {
+      try {
+        $query = \Drupal::database();
+        $result = $query->delete('pets_owners_storage')
+          ->condition('pid', $pid)
+          ->execute();
+        if ($result == TRUE) {
+          return new ModifiedResourceResponse(NULL, 204);
+        }
+        else {
+          return new ModifiedResourceResponse(NULL, 400);
+        }
+      }
+      catch (\Exception $e) {
+        throw new HttpException(500, 'Internal Server Error', $e);
+      }
+    }
+    return new ModifiedResourceResponse(NULL, 400);
+  }
 }
