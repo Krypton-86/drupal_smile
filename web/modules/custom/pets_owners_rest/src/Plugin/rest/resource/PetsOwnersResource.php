@@ -79,12 +79,22 @@ class PetsOwnersResource extends ResourceBase {
       'pets_name'   => $data['pets_name'],
       'email'       => $data['email'],
     ];
-      \Drupal::database()
+    try {
+      $result = \Drupal::database()
         ->update('pets_owners_storage')
         ->fields($fields)
         ->condition('id', $data['id'])
         ->execute();
-      return $a=0;
+      if ($result == TRUE) {
+        return new ModifiedResourceResponse(NULL, 200);
+      }
+      else {
+        return new ModifiedResourceResponse(NULL, 400);
+      }
+    }
+    catch (\Exception $e) {
+      throw new HttpException(500, 'Internal Server Error', $e);
+    }
   }
 
   /**
