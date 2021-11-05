@@ -44,15 +44,35 @@ class PetsOwnersListResource extends ResourceBase {
     }
     $result = $result->range(($page - 1) * $limit, $limit)
       ->execute()->fetchAllAssoc('id');
-    // Object to array.
-    // Add 'page n of N'
+
     foreach ($result as $item) {
-      $list[$item->id] = (array) $item;
+      $list['data'][$item->id] = (array) $item;
     }
+    $list['config']['pager'] = [
+      'page' => $page,
+      'pages' => $this->countPages($age, $limit),
+    ];
     if (!empty($list)) {
       return new ResourceResponse($list);
     }
     throw new NotFoundHttpException(t('Pets owners list is empty!'));
+  }
+
+  /**
+   * Returns count of pages by limit.
+   */
+  public function countPages($age, $limit) {
+    $result = \Drupal::database()
+      ->select('pets_owners_storage', 'st')
+      ->fields('st')
+      ->countQuery();
+    if (!empty($age)) {
+      $result = $result->condition('st.age', $age);
+    }
+    $result = $result->execute()->fetchAssoc();
+    $records = $result['expression'];
+    $limit = $limit > $records ? $records : $limit;
+    return $records % $limit > 0 ? intval($records / $limit) + 1 : intval($records / $limit);
   }
 
 }
