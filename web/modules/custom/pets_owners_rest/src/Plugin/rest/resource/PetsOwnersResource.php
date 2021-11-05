@@ -2,7 +2,6 @@
 
 namespace Drupal\pets_owners_rest\Plugin\rest\resource;
 
-use Drupal\Core\Database\Database;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
@@ -16,8 +15,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *   id = "pets_owners_resource",
  *   label = @Translation("Pets owners CRUD"),
  *   uri_paths = {
- *     "canonical" = "/api/pets_owners/{pid}",
- *     "create" = "/api/pets_owners/{pid}"
+ *     "canonical" = "/api/pets_owners",
+ *     "create" = "/api/pets_owners/edit"
  *   }
  * )
  */
@@ -31,77 +30,78 @@ class PetsOwnersResource extends ResourceBase {
   protected AccountProxyInterface $currentUser;
 
   /**
-   * Implements GET requests with parameter pid.
+   * Implements loading specific record by id.
    *
    * @return \Drupal\rest\ResourceResponse
    */
-  public function get($pid = NULL) {
-    if ($pid > 0) {
-      $query = Database::getConnection()
-        ->select('pets_owners_storage', 's')
-        ->condition('s.pid', $pid)
-        ->fields('s')
+  public function get() {
+    $id = \Drupal::request()->get('id');
+    if ($id > 0) {
+      $result = \Drupal::database()
+        ->select('pets_owners_storage', 'st')
+        ->fields('st', [
+          'id',
+          'name',
+          'gender',
+          'prefix',
+          'age',
+          'mother_name',
+          'father_name',
+          'have_pets',
+          'pets_name',
+          'email',
+        ])
+        ->condition('id', $id)
         ->execute()
         ->fetchAssoc();
-      if (!empty($query)) {
-        return new ResourceResponse($query);
+      if (!empty($result)) {
+        return new ResourceResponse($result);
       }
-      throw new NotFoundHttpException(t('Pets owner with PID :pid was not found', [':pid' => $pid]));
+      throw new NotFoundHttpException(t('Pets owner with ID :id was not found', [':id' => $id]));
     }
-    throw new BadRequestHttpException(t('No entry PID was provided'));
+    throw new BadRequestHttpException(t('No entry ID was provided'));
   }
 
   /**
-   * Implements POST requests.
+   * Implements editing specific record by id.
    *
    * @return \Drupal\rest\ResourceResponse
    */
-  public function post($pid, $data) {
-    // Array of fields from DB.
+  public function post($data) {
     $fields = [
-      'prefix' => 'prefix',
-      'name' => 'name',
-      'gender' => 'gender',
-      'age' => 'age',
-      'father' => 'father',
-      'mother' => 'mother',
-      'pets_name' => 'pets_mame',
-      'email' => 'email',
+      'name'        => $data['name'],
+      'gender'      => $data['gender'],
+      'prefix'      => $data['prefix'],
+      'age'         => $data['age'],
+      'mother_name' => $data['mother_name'],
+      'father_name' => $data['father_name'],
+      'have_pets'   => $data['have_pets'],
+      'pets_name'   => $data['pets_name'],
+      'email'       => $data['email'],
     ];
-    $value = array_intersect_key($data, $fields);
-    if ($pid > 0 && !empty($value)) {
-      try {
-        $query = \Drupal::database();
-        $update = $query->update('pets_owners_storage')
-          ->fields($value)
-          ->condition('pid', $pid)
-          ->execute();
-        if ($update == TRUE) {
-          return new ResourceResponse('Record was updated in DB');
-        }
-      }
-      catch (\Exception $e) {
-        throw new HttpException(500, 'Internal Server Error', $e);
-      }
-      throw new NotFoundHttpException(t('Pets owner with PID :pid was not found', [':pid' => $pid]));
-    }
-    throw new BadRequestHttpException(t('No entry PID or query parameters was provided'));
+      \Drupal::database()
+        ->update('pets_owners_storage')
+        ->fields($fields)
+        ->condition('id', $data['id'])
+        ->execute();
+      return $a=0;
   }
 
   /**
-   * Implements DELETE requests.
+   * Implements deleting specific record by id.
    *
    * @return \Drupal\rest\ResourceResponse
    */
-  public function delete($pid) {
-    if ($pid > 0) {
+  public function delete() {
+    $id = \Drupal::request()->get('id');
+    if ($id > 0) {
       try {
-        $query = \Drupal::database();
-        $result = $query->delete('pets_owners_storage')
-          ->condition('pid', $pid)
+        $result = \Drupal::database()
+          ->delete('pets_owners_storage')
+          ->condition('id', $id)
           ->execute();
         if ($result == TRUE) {
-          return new ModifiedResourceResponse(NULL, 204);
+          return new ModifiedResourceResponse(NULL, 200);
         }
         else {
           return new ModifiedResourceResponse(NULL, 400);
