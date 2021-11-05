@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *   id = "pets_owners_list_resource",
  *   label = @Translation("Pets owners list"),
  *   uri_paths = {
- *     "canonical" = "/api/pets_owners",
+ *     "canonical" = "/api/pets_owners/list",
  *   }
  * )
  */
@@ -26,32 +26,28 @@ class PetsOwnersListResource extends ResourceBase {
    */
   protected AccountProxyInterface $currentUser;
 
-
-
   /**
+   * List all pets owners.
+   *
    * @return \Drupal\rest\ResourceResponse
    */
   public function get() {
-    $page = \Drupal::request()->get('page');
-    if ($page <= 0) {
-      $page = 1;
-    }
-    $limit = \Drupal::request()->get('limit');
-    if ($limit <= 0) {
-      $limit = 2;
-    }
+    $page = \Drupal::request()->get('page') <= 0 ? 1 : \Drupal::request()->get('page');
+    $limit = \Drupal::request()->get('limit') <= 0 ? 1 : \Drupal::request()->get('limit');
+
     $name = \Drupal::request()->get('name') . '%';
-    $query = Database::getConnection()
-      ->select('pets_owners_storage', 's')
-      ->fields('s')->orderBy('s.pid', 'ASC');
+    $result = \Drupal::database()
+      ->select('pets_owners_storage', 'st')
+      ->fields('st')
+      ->orderBy('st.id', 'ASC');
     if (!empty($name)) {
-      $query = $query->condition('s.name', $name, 'LIKE');
+      $result = $result->condition('st.name', $name, 'LIKE');
     }
-    $query = $query->range(($page - 1) * $limit, $limit)
-      ->execute()->fetchAllAssoc('pid');
+    $result = $result->range(($page - 1) * $limit, $limit)
+      ->execute()->fetchAllAssoc('id');
     // Object to array.
-    foreach ($query as $item) {
-      $list[$item->pid] = (array) $item;
+    foreach ($result as $item) {
+      $list[$item->id] = (array) $item;
     }
     if (!empty($list)) {
       return new ResourceResponse($list);
