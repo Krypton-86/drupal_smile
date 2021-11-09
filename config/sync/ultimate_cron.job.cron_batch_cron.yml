@@ -1,0 +1,17 @@
+uuid: 7c4223cf-8996-408d-bc1c-5f8b5cdfe65c
+langcode: en
+status: true
+dependencies:
+  module:
+    - cron_batch
+title: 'Default cron handler'
+id: cron_batch_cron
+weight: 0
+module: cron_batch
+callback: cron_batch_cron
+scheduler:
+  id: simple
+launcher:
+  id: serial
+logger:
+  id: database

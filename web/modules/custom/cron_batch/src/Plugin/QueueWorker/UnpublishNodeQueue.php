@@ -2,7 +2,6 @@
 
 namespace Drupal\cron_batch\Plugin\QueueWorker;
 
-use Drupal\Core\Annotation\QueueWorker;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
@@ -10,7 +9,7 @@ use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class UnpublishNodeQueue
+ * Class UnpublishNodeQueue.
  *
  * @QueueWorker(
  *   id = "unpublish_node_queue",
@@ -60,10 +59,12 @@ class UnpublishNodeQueue extends QueueWorkerBase implements ContainerFactoryPlug
    * @inheritDoc
    */
   public function processItem($data) {
+    $config = \Drupal::configFactory()->get('cron_batch.resource');
     $node = $this->entityManager
       ->getStorage('node')
       ->load($data);
     if ($node instanceof NodeInterface && $node->isPublished()) {
+      $node->set('title', $node->get('title')->value . " - " . $config->get('unpublished_label'));
       $node->setUnpublished();
       $node->save();
     }

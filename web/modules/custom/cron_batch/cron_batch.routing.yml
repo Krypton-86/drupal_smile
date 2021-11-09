@@ -4,4 +4,11 @@ cron_batch.form:
     _form: '\Drupal\cron_batch\Form\BatchForm'
     _title: 'Form queue'
   requirements:
-    _permission: 'access content'
+    _permission: 'administer client entity'
+cron_batch.config_form:
+  path: '/config_form'
+  defaults:
+    _form:  '\Drupal\cron_batch\Form\ConfigForm'
+    _title: 'Config form'
+  requirements:
+    _permission: 'administer client entity'

@@ -1,0 +1,4 @@
+period: 200
+items: 25
+disabled: false
+unpublished_label: 'Unpublished by UnpublishNodeQueue processing'

@@ -1,0 +1,18 @@
+uuid: 83ae3822-475f-45c7-b742-4662285a1948
+langcode: en
+status: true
+dependencies:
+  module:
+    - pets_owners_rest
+    - serialization
+    - user
+id: pets_owners_list_resource
+plugin_id: pets_owners_list_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - cookie

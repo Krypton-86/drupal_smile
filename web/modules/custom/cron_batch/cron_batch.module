@@ -16,19 +16,26 @@ function cron_batch_node_insert(NodeInterface $node) {
 }
 
 
+
 /**
  * Implements hook_cron().
  */
-function cron_batch_cron() {
-  $queue = \Drupal::queue('unpublish_node_queue');
-  $queue->createQueue();
-  $nids = Drupal::entityQuery('node')
-    ->condition('status', TRUE)
-    ->sort('changed', 'ASC')
-    ->range(0, 15)
-    ->execute();
-  foreach ($nids as $nid) {
-    $queue->createItem($nid);
+function cron_batch_cron(){
+  $conf = \Drupal::configFactory()->get("cron_batch.resource");
+  $limit = $conf->get('items');
+  $period = time() - $conf->get('period');
+  if ($conf->get('disable') == 0) {
+    $nids = Drupal::entityQuery('node')
+      ->condition('status', TRUE)
+      ->condition('changed', $period, '<')
+      ->sort('changed', 'DESC')
+      ->range(0, $limit)
+      ->execute();
+
+    foreach ($nids as $nid) {
+      $queue = \Drupal::queue('unpublish_node_queue');
+      $queue->createItem($nid);
+    }
   }
 }
 
