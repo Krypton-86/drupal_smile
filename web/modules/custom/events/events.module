@@ -12,7 +12,7 @@ function events_entity_update(EntityInterface $entity) {
     /** @var ContainerAwareEventDispatcher $dispatcher */
     $dispatcher = \Drupal::service('event_dispatcher');
     $event = new NodeEvent($entity);
-    $dispatcher->dispatch((object)NodeEvent::NODE_SAVED, $event);
+    $dispatcher->dispatch(NodeEvent::NODE_SAVED, $event);
   }
 
 }

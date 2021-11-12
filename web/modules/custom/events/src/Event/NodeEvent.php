@@ -13,7 +13,7 @@ class NodeEvent extends Event {
   /**
    * Save node event.
    */
-  const NODE_SAVED = 'events.node_saved';
+  const NODE_SAVED = 'nodeSave';
 
   /**
    * Current node.
