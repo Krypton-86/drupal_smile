@@ -57,14 +57,21 @@ class EventsSubscriber implements EventSubscriberInterface {
       '@type' => $event->getNode()->getType(),
       '@title' => $event->getNode()->label(),
     ]));
-//    $event->stopPropagation();
+    // $event->stopPropagation();
   }
 
   /**
    * Implements anon Event.
    */
   public function redirectAnon(RequestEvent $event) {
-    if ($this->account->isAnonymous() && $this->route->getRouteName() != 'user.login') {
+    $routes = [
+      'user.login',
+      'user.reset.login',
+      'user.reset',
+      'user.reset.form',
+      'user.pass',
+    ];
+    if ($this->account->isAnonymous() && !in_array($this->route->getRouteName(), $routes)) {
       $event->setResponse(new RedirectResponse('/user/login', 302));
     }
   }
