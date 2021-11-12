@@ -8,9 +8,9 @@
 services:
   # Give your service a unique name, convention is to prefix service names with
   # the name of the module that implements them.
-  events_example_subscriber:
+  events.node_saved_subscriber:
     # Point to the class that will contain your implementation of
     # \Symfony\Component\EventDispatcher\EventSubscriberInterface
-    class: Drupal\events_example\EventSubscriber\EventsExampleSubscriber
+    class: Drupal\events\EventSubscriber\EventsSubscriber
     tags:
       - {name: event_subscriber}
