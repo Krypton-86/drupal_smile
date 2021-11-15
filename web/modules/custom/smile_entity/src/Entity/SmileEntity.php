@@ -37,10 +37,10 @@ use Drupal\smile_entity\SmileEntityInterface;
  *   },
  *   links = {
  *     "add-form" = "/smile/add",
- *     "canonical" = "/smile_entity/{smile_entity}",
+ *     "canonical" = "/smile/{smile_entity}",
  *     "edit-form" = "/smile/{smile_entity}/edit",
  *     "delete-form" = "/smile/{smile_entity}/delete",
- *     "collection" = "/admin/content/smile-entity"
+ *     "collection" = "/smile"
  *   },
  * )
  */
@@ -85,18 +85,19 @@ class SmileEntity extends ContentEntityBase implements SmileEntityInterface {
       ])
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['description'] = BaseFieldDefinition::create('text_long')
-      ->setLabel(t('Description'))
-      ->setDescription(t('A description of the smile entity.'))
+    $fields['body'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Body'))
+      ->setDescription(t('A body of the smile entity.'))
+      ->setRequired(TRUE)
       ->setDisplayOptions('form', [
-        'type' => 'text_textarea',
-        'weight' => 10,
+        'type' => 'text_default',
+        'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
         'type' => 'text_default',
         'label' => 'above',
-        'weight' => 10,
+        'weight' => -4,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
