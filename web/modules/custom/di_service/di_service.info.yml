@@ -1,5 +1,0 @@
-name: DI servise
-type: module
-description: Dependency injected service
-package: Custom
-core_version_requirement: ^9

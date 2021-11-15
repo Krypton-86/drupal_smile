@@ -1,7 +1,0 @@
-first_module.test:
-  title: go to /smile-test
-  route_name: first_module.test
-  expanded: FALSE
-  options:
-    attributes:
-      target: _blank

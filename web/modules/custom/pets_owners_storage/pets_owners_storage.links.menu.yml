@@ -1,4 +1,0 @@
-pets_owners_storage.list:
-  title: Pets owners list
-  route_name: pets_owners_storage.inforender
-  expanded: TRUE

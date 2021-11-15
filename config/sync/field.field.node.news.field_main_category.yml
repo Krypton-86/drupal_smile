@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_main_category
     - node.type.news
-    - taxonomy.vocabulary.main_category
 id: node.news.field_main_category
 field_name: field_main_category
 entity_type: node
@@ -19,8 +18,7 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles:
-      main_category: main_category
+    target_bundles: {  }
     sort:
       field: name
       direction: asc

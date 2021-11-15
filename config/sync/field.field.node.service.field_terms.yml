@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_terms
     - node.type.service
-    - taxonomy.vocabulary.term
 id: node.service.field_terms
 field_name: field_terms
 entity_type: node
@@ -19,8 +18,7 @@ default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'
   handler_settings:
-    target_bundles:
-      term: term
+    target_bundles: {  }
     sort:
       field: name
       direction: asc

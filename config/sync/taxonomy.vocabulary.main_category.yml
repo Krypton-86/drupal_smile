@@ -1,8 +1,0 @@
-uuid: 0482097d-affc-4ba8-bc01-9c69844d16a8
-langcode: en
-status: true
-dependencies: {  }
-name: 'Main Category'
-vid: main_category
-description: ''
-weight: 0

@@ -16,7 +16,7 @@ provider: null
 plugin: system_branding_block
 settings:
   id: system_branding_block
-  label: 'Bartik branding'
+  label: 'Bartik branding updated'
   provider: system
   label_display: visible
   use_site_logo: true

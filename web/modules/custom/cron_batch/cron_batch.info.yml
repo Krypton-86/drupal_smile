@@ -1,5 +1,0 @@
-name: 'Queue cron batch'
-type: module
-description: 'Custom module for batch and queue process'
-core_version_requirement: ^9
-package: Custom

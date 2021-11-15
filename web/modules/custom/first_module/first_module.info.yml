@@ -1,5 +1,0 @@
-name: First module
-description: Provides routing.
-package: Custom
-type: module
-core_version_requirement: ^9

@@ -1,7 +1,0 @@
-pets_owners_form.pets_owners_form:
-  path: '/pets_owners'
-  defaults:
-    _form:  '\Drupal\pets_owners_form\Form\PetsOwnersForm'
-    _title: 'Pets Owners Form'
-  requirements:
-    _permission: 'all'
