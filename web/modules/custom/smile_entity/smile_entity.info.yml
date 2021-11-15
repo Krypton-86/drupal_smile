@@ -1,0 +1,6 @@
+name: Smile Entity
+type: module
+description: 'Provides a smile entity entity.'
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9
