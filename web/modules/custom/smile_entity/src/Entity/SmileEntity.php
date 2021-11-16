@@ -75,13 +75,13 @@ class SmileEntity extends ContentEntityBase implements SmileEntityInterface {
       ->setSetting('max_length', 255)
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'weight' => -5,
+        'weight' => 1,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'string',
-        'weight' => -5,
+        'weight' => 1,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
@@ -91,13 +91,13 @@ class SmileEntity extends ContentEntityBase implements SmileEntityInterface {
       ->setRequired(TRUE)
       ->setDisplayOptions('form', [
         'type' => 'text_default',
-        'weight' => -4,
+        'weight' => 2,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
         'type' => 'text_default',
         'label' => 'above',
-        'weight' => -4,
+        'weight' => 2,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
