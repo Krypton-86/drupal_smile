@@ -1,20 +1,4 @@
-{#
-/**
- * @file
- * Default theme implementation to present a smile entity entity.
- *
- * This template is used when viewing a registered smile entity's page,
- * e.g., /smile)/123. 123 being the smile entity's ID.
- *
- * Available variables:
- * - content: A list of content items. Use 'content' to print all content, or
- *   print a subset such as 'content.title'.
- * - attributes: HTML attributes for the container element.
- *
- * @see template_preprocess_smile_entity()
- */
-#}
-<article{{ attributes }}>
+<article{{ ' class="my_custom_content_class"' }}>
   {% if content %}
     {{- content -}}
   {% endif %}
