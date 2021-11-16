@@ -103,17 +103,15 @@ class SmileEntity extends ContentEntityBase implements SmileEntityInterface {
 
     $fields['role'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Role'))
-      ->setDescription(t('Only selected roles have access to entity page.'))
+      ->setDescription(t('Only selected roles will have access to this page.'))
       ->setSetting('target_type', 'user_role')
-      ->setSetting('handler', 'default')
       ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
+        'type' => 'select_entity_reference',
         'weight' => 3,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
+        'option_settings' => [
+          'label' => 'Role',
+          'value' => 'role_code',
           'size' => 64,
-          'autocomplete_type' => 'tags',
-          'placeholder' => 'Type first symbols of user role',
         ],
       ])
       ->setDisplayConfigurable('form', TRUE)

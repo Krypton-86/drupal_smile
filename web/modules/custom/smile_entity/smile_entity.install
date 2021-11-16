@@ -5,30 +5,24 @@ use Drupal\Core\Field\BaseFieldDefinition;
  * Implements hook_update_N().
  */
 function smile_entity_update_9001() {
-  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
   $storage_definition = BaseFieldDefinition::create('entity_reference')
-    ->setLabel(t('Role'))
-    ->setDescription(t('Only selected roles have access to entity page.'))
-    ->setSetting('target_type', 'user_role')
-    ->setSetting('handler', 'default')
-    ->setDisplayOptions('form', [
-      'type' => 'entity_reference_autocomplete',
-      'weight' => 3,
-      'settings' => [
-        'match_operator' => 'CONTAINS',
-        'size' => 64,
-        'autocomplete_type' => 'tags',
-        'placeholder' => 'Type first symbols of user role',
-      ],
-    ])
-    ->setDisplayConfigurable('form', TRUE)
-    ->setDisplayOptions('view', [
-      'label' => 'above',
-      'type' => 'entity_reference_label',
-      'weight' => 3,
-    ])
-    ->setDisplayConfigurable('view', TRUE);
-
-  $definition_update_manager
-    ->installFieldStorageDefinition('user_role', 'smile_entity', 'smile_entity', $storage_definition);
+      ->setLabel(t('Role'))
+      ->setDescription(t('Only selected roles will have access to this page.'))
+      ->setSetting('target_type', 'user_role')
+      ->setSetting('handler', 'default')
+      ->setDisplayOptions('form', [
+        'type' => 'select_entity_reference',
+        'weight' => 3,
+        'option_settings' => [
+          'label' => 'Role',
+          'value' => 'role_code',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'entity_reference_label',
+        'weight' => 3,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
 }
