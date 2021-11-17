@@ -19,13 +19,21 @@ class SmileEntityAccessControlHandler extends EntityAccessControlHandler {
 
     switch ($operation) {
       case 'view':
-        return AccessResult::allowedIfHasPermission($account, 'view smile entity');
+        return AccessResult::allowedIfHasPermission($account, $entity->get('role')->getString());
 
       case 'update':
-        return AccessResult::allowedIfHasPermissions($account, ['edit smile entity', 'administer smile entity'], 'OR');
+        return AccessResult::allowedIfHasPermissions($account, [
+          'edit smile entity',
+          'administer smile entity',
+          $entity->get('role')->getString(),
+        ], 'OR');
 
       case 'delete':
-        return AccessResult::allowedIfHasPermissions($account, ['delete smile entity', 'administer smile entity'], 'OR');
+        return AccessResult::allowedIfHasPermissions($account, [
+          'delete smile entity',
+          'administer smile entity',
+          $entity->get('role')->getString(),
+        ], 'OR');
 
       default:
         // No opinion.
@@ -38,7 +46,10 @@ class SmileEntityAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermissions($account, ['create smile entity', 'administer smile entity'], 'OR');
+    return AccessResult::allowedIfHasPermissions($account, [
+      'create smile entity',
+      'administer smile entity',
+    ], 'OR');
   }
 
 }
