@@ -1,6 +1,6 @@
 uuid: 3dcdfbbe-facd-48ca-ab14-20eafb0c1621
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.tools

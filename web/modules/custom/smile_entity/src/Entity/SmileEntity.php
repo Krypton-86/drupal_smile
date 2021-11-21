@@ -101,6 +101,10 @@ class SmileEntity extends ContentEntityBase implements SmileEntityInterface {
       ])
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['created'] = BaseFieldDefinition::create('created')
+      ->setLabel(t('Created'))
+      ->setDescription(t('The time that the entity was created.'));
+
     $fields['role'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel('Role')
       ->setDescription('Only selected role will have access to entity page.')

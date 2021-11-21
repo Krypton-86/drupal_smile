@@ -80,6 +80,7 @@ class SmileEntityListBuilder extends EntityListBuilder {
   public function buildHeader() {
     $header['id'] = $this->t('ID');
     $header['title'] = $this->t('Title');
+    $header['created'] = $this->t('Created');
     return $header + parent::buildHeader();
   }
 
@@ -90,6 +91,7 @@ class SmileEntityListBuilder extends EntityListBuilder {
     /* @var $entity \Drupal\smile_entity\SmileEntityInterface */
     $row['id'] = $entity->id();
     $row['title'] = $entity->toLink();
+    $row['created'] = $this->dateFormatter->format($entity->get('created')->getValue()[0]['value'], 'short');
     return $row + parent::buildRow($entity);
   }
 
