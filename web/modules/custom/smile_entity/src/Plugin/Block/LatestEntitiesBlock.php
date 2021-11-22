@@ -2,7 +2,6 @@
 
 namespace Drupal\smile_entity\Plugin\Block;
 
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -102,29 +101,20 @@ class LatestEntitiesBlock extends BlockBase implements ContainerFactoryPluginInt
   /**
    * {@inheritdoc}
    */
-  protected function blockAccess(AccountInterface $account) {
-    // @DCG Evaluate the access condition here.
-    $condition = TRUE;
-    return AccessResult::allowedIf($condition);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function build() {
-    $entity_id = 'smile_entity';
-    $query = $this->entityTypeManager->getStorage($entity_id)->getQuery();
-    $ids = $query
+    $entity_type_id = 'smile_entity';
+    $query = $this->entityTypeManager->getStorage($entity_type_id)->getQuery();
+    $entity_ids = $query
       ->condition('role', $this->currentUser->getRoles(), 'IN')
       ->sort("created", "DESC")
       ->range(0, $this->configuration['items'])
       ->execute();
     $build = [];
     $smile_entities = $this->entityTypeManager
-      ->getStorage($entity_id)
-      ->loadMultiple($ids);
+      ->getStorage($entity_type_id)
+      ->loadMultiple($entity_ids);
     $build[] = $this->entityTypeManager
-      ->getViewBuilder($entity_id)
+      ->getViewBuilder($entity_type_id)
       ->viewMultiple($smile_entities);
     return [
       'elements'     => $build,

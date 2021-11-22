@@ -6,6 +6,8 @@ dependencies:
     - smile_entity
   theme:
     - bartik
+_core:
+  default_config_hash: eojDTRogRPr0yFVWpUHJiYEdKCqnUBPgNC6xEv9NkeQ
 id: latest_entities
 theme: bartik
 region: sidebar_first
@@ -17,6 +19,5 @@ settings:
   label: 'Latest entities'
   provider: smile_entity
   label_display: visible
-  items: '11'
-  foo: 'Hello world!'
+  items: '1'
 visibility: {  }

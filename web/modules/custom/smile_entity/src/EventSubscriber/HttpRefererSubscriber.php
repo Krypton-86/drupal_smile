@@ -6,12 +6,14 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Redirect Anonymous to login page.
+ * Redirect to listing page if referer is not domain.
  */
 class HttpRefererSubscriber implements EventSubscriberInterface {
 
@@ -51,20 +53,19 @@ class HttpRefererSubscriber implements EventSubscriberInterface {
    * {@inheritdoc}
    */
   public static function getSubscribedEvents(): array {
-    $events[KernelEvents::REQUEST][] = ['checkReferer'];
+    $events[KernelEvents::REQUEST][] = ['refererAction'];
     return $events;
   }
 
   /**
-   * Check and redirect to login page.
+   * Check referer and redirect to listing page.
    */
-  public function checkReferer(RequestEvent $event) {
-    // Array of routes to redirect on home page.
+  public function refererAction(RequestEvent $event) {
     $routes = [
       'entity.smile_entity.canonical',
     ];
     if (!strpos($event->getRequest()->headers->get('referer'), $event->getRequest()->getHost()) && in_array($this->route->getRouteName(), $routes)) {
-      $event->setResponse(new RedirectResponse('/'));
+      $event->setResponse(new RedirectResponse('/smile'));
     }
   }
 
