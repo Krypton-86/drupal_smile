@@ -112,24 +112,23 @@ class LatestEntitiesBlock extends BlockBase implements ContainerFactoryPluginInt
    * {@inheritdoc}
    */
   public function build() {
-    $storage = $this->entityTypeManager->getStorage('smile_entity');
-    $query = $this->entityTypeManager->getStorage('smile_entity')->getQuery();
-    $id = $query
+    $entity_id = 'smile_entity';
+    $query = $this->entityTypeManager->getStorage($entity_id)->getQuery();
+    $ids = $query
       ->condition('role', $this->currentUser->getRoles(), 'IN')
       ->sort("created", "DESC")
       ->range(0, $this->configuration['items'])
       ->execute();
-    $list = [];
-    $smile_entities = $storage->loadMultiple($id);
-    // Get view of entities.
-    foreach ($smile_entities as $se) {
-      $list[$se->id()] = $this->entityTypeManager->getViewBuilder('smile_entity')
-        ->view($se, 'rss');
-    }
+    $build = [];
+    $smile_entities = $this->entityTypeManager
+      ->getStorage($entity_id)
+      ->loadMultiple($ids);
+    $build[] = $this->entityTypeManager
+      ->getViewBuilder($entity_id)
+      ->viewMultiple($smile_entities);
     return [
-      'content'     => $list,
+      'elements'     => $build,
       '#cache' => [
-        'tags' => ['create_smile_entity'],
         'contexts' => ['user.roles'],
       ],
     ];
