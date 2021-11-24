@@ -49,6 +49,7 @@
         "drupal/ultimate_cron": "^2.0@alpha",
         "drupal/views_bulk_operations": "^4.0",
         "drupal/views_slideshow": "^4.8",
+        "drupal/webform": "^6.1",
         "drush/drush": "^10.6",
         "squizlabs/php_codesniffer": "^3.6.0"
     },
