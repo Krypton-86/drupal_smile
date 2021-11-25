@@ -1,0 +1,8 @@
+uuid: 8bc2c57b-2172-4664-baeb-daa67851c105
+langcode: en
+status: true
+dependencies: {  }
+name: 'submission categories'
+vid: submission_categories
+description: 'taxonomy term vocabulary'
+weight: 0

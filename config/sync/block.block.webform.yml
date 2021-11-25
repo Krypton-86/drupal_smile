@@ -1,0 +1,30 @@
+uuid: 309b351b-f324-4a93-a3e1-dc79440bda69
+langcode: en
+status: true
+dependencies:
+  config:
+    - webform.webform.contact_page
+  module:
+    - system
+    - webform
+  theme:
+    - bartik
+id: webform
+theme: bartik
+region: content
+weight: -2
+provider: null
+plugin: webform_block
+settings:
+  id: webform_block
+  label: 'Contact form'
+  provider: webform
+  label_display: visible
+  webform_id: contact_page
+  default_data: ''
+  redirect: false
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false

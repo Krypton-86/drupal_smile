@@ -1,0 +1,24 @@
+uuid: 0c084a62-e594-4238-b478-c6634302246e
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bartik
+id: pagetitle
+theme: bartik
+region: content
+weight: -7
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'My Contact Submission page'
+  provider: core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: /webform/contact_page/submissions
+    negate: false
