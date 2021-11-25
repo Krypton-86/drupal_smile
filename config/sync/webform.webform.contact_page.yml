@@ -38,8 +38,6 @@ elements: |-
     '#type': tel
     '#title': 'Phone number'
     '#required': true
-    '#unique': true
-    '#unique_entity': true
     '#access_create_roles':
       - authenticated
       - anonymous

@@ -4,3 +4,11 @@ services:
     arguments: ['@messenger' ,'@current_user','@current_route_match']
     tags:
       - { name: event_subscriber }
+  login_only_mode:
+    class: Drupal\smile_entity\LoginOnlyMode
+    arguments: ['@state']
+  login_only_mode_subscriber:
+    class: Drupal\smile_entity\EventSubscriber\LoginOnlyModeSubscriber
+    arguments: ['@login_only_mode', '@config.factory', '@string_translation', '@url_generator', '@current_user', '@bare_html_page_renderer', '@messenger']
+    tags:
+      - { name: event_subscriber }

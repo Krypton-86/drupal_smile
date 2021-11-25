@@ -1,0 +1,7 @@
+login_only_mode.route:
+  path: '/admin/config/development/loginonly'
+  defaults:
+    _form: '\Drupal\smile_entity\Form\LoginOnlyForm'
+    _title: 'LoginOnlyMode'
+  requirements:
+    _permission: 'administer site configuration'

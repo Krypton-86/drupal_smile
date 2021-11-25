@@ -1,0 +1,6 @@
+custom.site_login_only_mode:
+  title: 'Login only mode'
+  parent: system.admin_config_development
+  description: 'Take the site to login only mode.'
+  route_name: login_only_mode.route
+  weight: -11
