@@ -30,7 +30,7 @@ class LoginOnlyForm extends ConfigFormBase {
   protected $permissionHandler;
 
   /**
-   * Constructs a new SiteMaintenanceModeForm.
+   * Constructs a new Sitelogin onlyModeForm.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.

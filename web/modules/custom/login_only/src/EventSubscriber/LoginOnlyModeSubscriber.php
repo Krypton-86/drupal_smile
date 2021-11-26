@@ -13,7 +13,7 @@ use Drupal\login_only\LoginOnlyModeInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -108,19 +108,15 @@ class LoginOnlyModeSubscriber implements EventSubscriberInterface {
       \Drupal::service('page_cache_kill_switch')->trigger();
 
       if (!$this->loginOnlyMode->exempt($this->account)) {
-        // Deliver the 503 page if the site is in LoginOnly mode and the
-        // logged in user is not allowed to bypass it.
-
-        // If the request format is not 'html' then show default LoginOnly
-        // mode page else show a text/plain page with LoginOnly message.
-        if ($request->getRequestFormat() !== 'html') {
-          $response = new Response($this->getSiteLoginOnlyMessage(), 503, ['Content-Type' => 'text/plain']);
-          $event->setResponse($response);
-          return;
+        $this->messenger->addWarning($this->getSiteLoginOnlyMessage());
+        if ($this->account->isAnonymous() &&
+          !in_array($route_match->getRouteName(), $this->getAnonRoutes())) {
+          $event->setResponse(new RedirectResponse('/user/login', 302));
         }
-        $response = $this->bareHtmlPageRenderer->renderBarePage(['#markup' => $this->getSiteLoginOnlyMessage()], $this->t('Site under LoginOnly'), 'maintenance_page');
-        $response->setStatusCode(503);
-        $event->setResponse($response);
+        elseif ($this->account->isAuthenticated() &&
+          !in_array($route_match->getRouteName(), $this->getAuthRoutes())) {
+          $event->setResponse(new RedirectResponse('/user/' . $this->account->id(), 302));
+        }
       }
       else {
         // Display a message if the logged in user has access to the site in
@@ -148,6 +144,38 @@ class LoginOnlyModeSubscriber implements EventSubscriberInterface {
     return new FormattableMarkup($this->config->get('system.login_only')->get('message'), [
       '@site' => $this->config->get('system.site')->get('name'),
     ]);
+  }
+
+  /**
+   * Gets accepted routes array for anonymous users.
+   *
+   * @return array
+   *   The accessible routes array.
+   */
+  protected function getAnonRoutes():array {
+    return [
+      'user.login',
+      'user.pass',
+      'user.reset.login',
+      'user.reset',
+      'user.reset.form',
+    ];
+  }
+
+  /**
+   * Gets accepted routes array for authorised users.
+   *
+   * @return array
+   *   The accessible routes array.
+   */
+  protected function getAuthRoutes():array {
+    return [
+      'user.page',
+      'user.logout',
+      'entity.user.canonical',
+      'entity.webform.canonical',
+      'entity.webform.user.submissions',
+    ];
   }
 
   /**

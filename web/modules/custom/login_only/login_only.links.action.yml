@@ -1,0 +1,11 @@
+login_only.contact_form:
+  route_name: entity.webform.canonical
+  title: 'Contact page'
+  appears_on:
+    - entity.user.canonical
+
+login_only.user_submissions:
+  route_name: entity.webform.user.submissions
+  title: 'My Submissions'
+  appears_on:
+    - entity.user.canonical

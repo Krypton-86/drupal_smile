@@ -7,7 +7,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
 
 /**
- * Provides the default implementation of the maintenance mode service.
+ * Provides the default implementation of the login only mode service.
  */
 class LoginOnlyMode implements LoginOnlyModeInterface {
 
@@ -19,7 +19,7 @@ class LoginOnlyMode implements LoginOnlyModeInterface {
   protected $state;
 
   /**
-   * Constructs a new maintenance mode service.
+   * Constructs a new login only mode service.
    *
    * @param \Drupal\Core\State\StateInterface $state
    *   The state.
@@ -49,7 +49,7 @@ class LoginOnlyMode implements LoginOnlyModeInterface {
    * {@inheritdoc}
    */
   public function exempt(AccountInterface $account) {
-    return $account->hasPermission('access site in login only mode');
+    return $account->hasPermission('full access to site in login only mode');
   }
 
 }
