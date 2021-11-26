@@ -1,5 +1,0 @@
-smile_entity.add_form:
-  route_name: entity.smile_entity.add_form
-  title: 'Add smile entity'
-  appears_on:
-    - entity.smile_entity.collection

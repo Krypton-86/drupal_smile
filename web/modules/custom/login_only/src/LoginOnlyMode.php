@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\smile_entity;
+namespace Drupal\login_only;
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -49,7 +49,7 @@ class LoginOnlyMode implements LoginOnlyModeInterface {
    * {@inheritdoc}
    */
   public function exempt(AccountInterface $account) {
-    return $account->hasPermission('access site in maintenance mode');
+    return $account->hasPermission('access site in login only mode');
   }
 
 }

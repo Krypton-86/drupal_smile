@@ -10,9 +10,9 @@ use Drupal\Core\Render\Element;
 /**
  * Implements hook_theme().
  */
-function smile_entity_theme() {
+function login_only_theme() {
   return [
-    'smile_entity' => [
+    'login_only' => [
       'render element' => 'elements',
     ],
   ];
@@ -29,7 +29,7 @@ function smile_entity_theme() {
  *     fields attached to the entity.
  *   - attributes: HTML attributes for the containing element.
  */
-function template_preprocess_smile_entity(array &$variables) {
+function template_preprocess_login_only(array &$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }

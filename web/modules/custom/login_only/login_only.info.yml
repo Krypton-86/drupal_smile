@@ -1,0 +1,6 @@
+name: Login only mode
+type: module
+description: 'Puts site in Login only mode.'
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9

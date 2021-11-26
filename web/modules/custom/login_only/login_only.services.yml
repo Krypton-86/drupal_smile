@@ -1,0 +1,9 @@
+services:
+  login_only_mode:
+    class: Drupal\login_only\LoginOnlyMode
+    arguments: ['@state']
+  login_only_mode_subscriber:
+    class: Drupal\login_only\EventSubscriber\LoginOnlyModeSubscriber
+    arguments: ['@login_only_mode', '@config.factory', '@string_translation', '@url_generator', '@current_user', '@bare_html_page_renderer', '@messenger']
+    tags:
+      - { name: event_subscriber }

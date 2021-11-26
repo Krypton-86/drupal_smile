@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\smile_entity;
+namespace Drupal\login_only;
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\smile_entity\EventSubscriber;
+namespace Drupal\login_only\EventSubscriber;
 
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -9,7 +9,7 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\RouteMatch;
 use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\smile_entity\LoginOnlyModeInterface;
+use Drupal\login_only\LoginOnlyModeInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -27,7 +27,7 @@ class LoginOnlyModeSubscriber implements EventSubscriberInterface {
   /**
    * The LoginOnly mode.
    *
-   * @var \Drupal\smile_entity\LoginOnlyModeInterface
+   * @var \Drupal\login_only\LoginOnlyModeInterface
    */
   protected $loginOnlyMode;
 
@@ -69,7 +69,7 @@ class LoginOnlyModeSubscriber implements EventSubscriberInterface {
   /**
    * Constructs a new LoginOnlyModeSubscriber.
    *
-   * @param \Drupal\smile_entity\LoginOnlyModeInterface $login_only_mode
+   * @param \Drupal\login_only\LoginOnlyModeInterface $login_only_mode
    *   The LoginOnly mode.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
@@ -118,7 +118,7 @@ class LoginOnlyModeSubscriber implements EventSubscriberInterface {
           $event->setResponse($response);
           return;
         }
-        $response = $this->bareHtmlPageRenderer->renderBarePage(['#markup' => $this->getSiteLoginOnlyMessage()], $this->t('Site under LoginOnly'), 'LoginOnly_page');
+        $response = $this->bareHtmlPageRenderer->renderBarePage(['#markup' => $this->getSiteLoginOnlyMessage()], $this->t('Site under LoginOnly'), 'maintenance_page');
         $response->setStatusCode(503);
         $event->setResponse($response);
       }
@@ -145,7 +145,7 @@ class LoginOnlyModeSubscriber implements EventSubscriberInterface {
    *   The formatted site LoginOnly message.
    */
   protected function getSiteLoginOnlyMessage() {
-    return new FormattableMarkup($this->config->get('system.LoginOnly')->get('message'), [
+    return new FormattableMarkup($this->config->get('system.login_only')->get('message'), [
       '@site' => $this->config->get('system.site')->get('name'),
     ]);
   }
